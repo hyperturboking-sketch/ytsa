@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Disallow private/account pages
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api/
+
+# Crawl-delay for polite bots
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://fbf109c9-a25e-4b26-8f8e-4430fa6216da-00-3jx30vaggl6ui.worf.replit.dev/sitemap.xml

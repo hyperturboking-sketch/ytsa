@@ -1,0 +1,202 @@
+Build a full-stack web application called **StreamFetch**. The app should function as a simple video and audio downloader where users paste a video link and download the media in different formats and resolutions.
+
+The application must include a frontend, backend API, user authentication, and a database.
+
+GENERAL ARCHITECTURE
+
+Frontend: React with Next.js and Tailwind CSS
+Backend: Node.js with Express
+Database: MongoDB Atlas
+Video extraction: yt-dlp
+Deployment-ready for Vercel (frontend) and Render (backend)
+
+The system should avoid storing large video files on the server. Instead, it should extract the available formats and return direct download links whenever possible.
+
+CORE FEATURES
+
+1. Homepage
+   The homepage should have:
+   • a clean modern UI
+   • a large input box where users paste a video URL
+   • a download button
+   • a section explaining how the tool works
+   • space for advertisement banners
+
+When the user pastes a link and clicks download, the frontend should send the URL to the backend API to analyze the video.
+
+2. Video Analysis
+   The backend should use yt-dlp to fetch video metadata including:
+   • title
+   • thumbnail
+   • duration
+   • available formats
+   • video resolutions (1080p, 720p, 480p, etc.)
+   • audio formats (mp3, m4a)
+
+The backend should return this information as JSON.
+
+3. Format Selection
+   The frontend should display:
+   • the video thumbnail
+   • video title
+   • available download formats
+
+Each format should have a download button.
+
+Example format list:
+1080p MP4
+720p MP4
+480p MP4
+Audio MP3
+Audio M4A
+
+4. Download Handling
+   When the user selects a format, the backend should either:
+   • provide a direct stream URL if available
+   or
+   • pipe the download stream using yt-dlp without saving the file to disk.
+
+Do not permanently store any video files on the server.
+
+5. User Authentication
+   Add a full authentication system with:
+   • signup
+   • login
+   • logout
+
+User data should be stored in MongoDB Atlas.
+
+Each user should have:
+• username
+• email
+• password (hashed)
+• download history
+
+6. Download History
+   Logged-in users should have a dashboard where they can view previously analyzed videos and download them again.
+
+7. Database Structure
+   Create MongoDB collections:
+
+Users
+
+* username
+* email
+* password hash
+* createdAt
+
+Downloads
+
+* userId
+* videoTitle
+* videoURL
+* selectedFormat
+* createdAt
+
+8. Advertisement Integration
+   Add placeholder components where ads can be placed.
+
+Locations:
+• homepage banner
+• above download results
+• sidebar ads
+
+These should be designed so Google AdSense can be inserted later.
+
+9. Admin Panel
+   Create a simple admin page where the admin can view:
+   • total users
+   • total downloads
+   • recent activity
+
+Admin access should be protected.
+
+10. UI Design
+    The UI should use Tailwind CSS and look modern and minimal.
+
+Pages required:
+• homepage
+• login page
+• signup page
+• download results page
+• user dashboard
+• admin panel
+
+Include responsive design so the site works on mobile and desktop.
+
+11. Security
+    Add:
+    • input validation
+    • rate limiting
+    • basic error handling
+    • CORS configuration
+
+12. Project Folder Structure
+
+frontend/
+pages/
+components/
+styles/
+
+backend/
+routes/
+controllers/
+middleware/
+services/
+
+database/
+models/
+
+Include clear comments explaining each file.
+
+13. API Endpoints
+
+POST /api/analyze
+Accepts video URL and returns available formats.
+
+POST /api/download
+Accepts selected format and returns the download stream.
+
+POST /api/auth/signup
+Creates new user.
+
+POST /api/auth/login
+Logs in user.
+
+GET /api/user/history
+Returns user download history.
+
+14. Environment Variables
+
+Use environment variables for:
+MONGODB_URI
+JWT_SECRET
+PORT
+
+Provide an example .env file.
+
+15. Setup Instructions
+
+Include a README explaining how to:
+
+• install dependencies
+• connect MongoDB Atlas
+• install yt-dlp and ffmpeg
+• run the frontend and backend
+• deploy frontend to Vercel
+• deploy backend to Render
+
+16. Error Handling
+
+If a video cannot be analyzed or downloaded, show a user-friendly error message.
+
+17. Performance
+
+Ensure the backend streams downloads instead of storing files on disk to reduce storage usage.
+
+The project should run locally with:
+
+npm install
+npm run dev
+
+Provide all necessary code files for both frontend and backend.

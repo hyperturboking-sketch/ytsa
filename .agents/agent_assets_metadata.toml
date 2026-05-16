@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "_sGduDWrnG3WY_GfHhKTy"
+uri = "file://artifacts/streamfetch/public/ytsave-icon.png"
+type = "image"
+title = "YTSave Logo Icon"
+
+[[outputs]]
+id = "a6hGxw3gXkFqc_kucLgNB"
+uri = "file://streamfetch-frontend.zip"
+type = "unspecified"
+title = "StreamFetch Frontend (2.83 MB)"

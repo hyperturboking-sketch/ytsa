@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For fluid page transitions, layout animations, and micro-interactions"
+  "recharts": "For beautiful admin dashboard analytics and statistics visualization"
+  "date-fns": "For elegant human-readable date formatting in history and admin panels"
+  "lucide-react": "For crisp, modern SVG icons throughout the interface"
+  "clsx": "For conditional Tailwind class merging"
+  "tailwind-merge": "For resolving Tailwind class conflicts intelligently"
+
+images:
+  - path: "artifacts/streamfetch/public/images/hero-glow.png"
+    description: "Abstract dark background with intense, vibrant purple and cyan neon glowing light leaks and subtle geometric tech mesh"
+    aspect_ratio: "16:9"
+  - path: "artifacts/streamfetch/public/images/logo-mark.png"
+    description: "Minimalist, sleek tech logo mark featuring a stylized stylized play button merging with a download arrow, vibrant cyan and purple gradient on transparent background"
+    aspect_ratio: "1:1"
+
+notes:
+  - "Assuming @workspace/api-client-react is available and provides useQuery/useMutation hooks matching the OpenAPI spec"
+  - "Authentication relies on localStorage 'streamfetch_token' being passed as a Bearer token in the Authorization header"
+  - "Using dark mode by default for the 'modern dark tech' aesthetic"

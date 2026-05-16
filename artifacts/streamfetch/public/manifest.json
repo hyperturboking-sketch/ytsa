@@ -1,0 +1,27 @@
+{
+  "name": "StreamFetch – Video & Audio Downloader",
+  "short_name": "StreamFetch",
+  "description": "Download videos and audio from YouTube, TikTok, Twitter, Instagram and 1000+ sites.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "entertainment"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/opengraph.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "label": "YTSave home page"
+    }
+  ]
+}

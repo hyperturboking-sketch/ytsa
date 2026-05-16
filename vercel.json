@@ -1,0 +1,10 @@
+{
+  "buildCommand": "pnpm install && pnpm --filter @workspace/streamfetch run build",
+  "outputDirectory": "artifacts/streamfetch/dist/public",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://streamfetch.onrender.com/api/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
