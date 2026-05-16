@@ -12,7 +12,7 @@ export default function Footer() {
               <img
                 src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="YTSave"
-                className="w-16 h-16 object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.4)] group-hover:drop-shadow-[0_0_28px_rgba(139,92,246,0.6)] group-hover:scale-110 transition-all duration-300"
+                className="w-12 h-12 object-contain drop-shadow-[0_0_14px_rgba(139,92,246,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(139,92,246,0.6)] group-hover:scale-105 transition-all duration-300"
               />
               <span className="font-display font-bold text-3xl tracking-tight text-foreground">
                 YTSave

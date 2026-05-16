@@ -74,7 +74,7 @@ export default function Navbar() {
               <img
                 src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="YTSave"
-                className="w-14 h-14 object-contain drop-shadow-[0_0_16px_rgba(139,92,246,0.5)] group-hover:drop-shadow-[0_0_24px_rgba(139,92,246,0.7)] group-hover:scale-110 transition-all duration-300"
+                className="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(139,92,246,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(139,92,246,0.6)] group-hover:scale-105 transition-all duration-300"
               />
               <span className="font-display font-bold text-xl tracking-tight text-white group-hover:text-white/90 transition-colors">
                 YTSave
