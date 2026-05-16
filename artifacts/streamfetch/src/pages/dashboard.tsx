@@ -11,8 +11,8 @@ import { useSEO } from "@/hooks/use-seo";
 
 export default function Dashboard() {
   useSEO({
-    title: "My Downloads – StreamFetch",
-    description: "View and re-download your StreamFetch download history.",
+    title: "My Downloads – YTSave",
+    description: "View and re-download your YTSave download history.",
     canonical: "/dashboard",
     noindex: true,
   });
@@ -23,7 +23,7 @@ export default function Dashboard() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!user && !localStorage.getItem('sf_token')) {
+    if (!user && !localStorage.getItem('ytsave_token')) {
       setLocation('/login');
     }
   }, [user, setLocation]);
@@ -103,7 +103,7 @@ export default function Dashboard() {
             </div>
             <h3 className="text-xl font-bold text-white mb-2">No downloads yet</h3>
             <p className="text-muted-foreground mb-6 max-w-sm">
-              Your download history will appear here once you start using StreamFetch.
+              Your download history will appear here once you start using YTSave.
             </p>
             <button 
               onClick={() => setLocation('/')}

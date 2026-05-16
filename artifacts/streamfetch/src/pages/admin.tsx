@@ -18,7 +18,7 @@ export default function Admin() {
   useEffect(() => {
     if (user && !user.isAdmin) {
       setLocation('/');
-    } else if (!user && !localStorage.getItem('sf_token')) {
+    } else if (!user && !localStorage.getItem('ytsave_token')) {
       setLocation('/login');
     }
   }, [user, setLocation]);

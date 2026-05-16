@@ -10,20 +10,20 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem('sf_token'),
+  token: localStorage.getItem('ytsave_token'),
   user: null, // Will be populated by the me query
   setAuth: (token, user) => {
-    localStorage.setItem('sf_token', token);
+    localStorage.setItem('ytsave_token', token);
     set({ token, user });
   },
   clearAuth: () => {
-    localStorage.removeItem('sf_token');
+    localStorage.removeItem('ytsave_token');
     set({ token: null, user: null });
   },
   setUser: (user) => set({ user }),
 }));
 
 export function getAuthHeaders() {
-  const token = localStorage.getItem('sf_token');
+  const token = localStorage.getItem('ytsave_token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 }

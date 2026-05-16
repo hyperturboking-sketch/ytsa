@@ -120,16 +120,16 @@ const tierIcon = {
 
 export default function Tools() {
   useSEO({
-    title: "All Tools – Video Downloader, Audio Extractor, AI Transcription | StreamFetch",
+    title: "All Tools – Video Downloader, Audio Extractor, AI Transcription | YTSave",
     description:
-      "Access all StreamFetch tools in one place: download MP4 videos, extract MP3 audio, generate AI transcripts, download subtitles, and batch-download playlists from YouTube, TikTok, Instagram and 1000+ sites.",
+      "Access all YTSave tools in one place: download MP4 videos, extract MP3 audio, generate AI transcripts, download subtitles, and batch-download playlists from YouTube, TikTok, Instagram and 1000+ sites.",
     keywords: "video downloader tool, audio extractor, youtube to mp3 converter, ai video transcription, subtitle downloader, batch youtube downloader, playlist downloader, online video tools",
     canonical: "/tools",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "name": "StreamFetch Tools",
-      "description": "All video download and processing tools available on StreamFetch",
+      "name": "YTSave Tools",
+      "description": "All video download and processing tools available on YTSave",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -319,7 +319,7 @@ export default function Tools() {
       <ToolReviews
         reviews={TOOLS_REVIEWS}
         title="Used daily by creators worldwide"
-        subtitle="Thousands of people use StreamFetch tools to save, convert and transcribe content every day."
+        subtitle="Thousands of people use YTSave tools to save, convert and transcribe content every day."
         ratingCount="8,500+"
       />
     </div>
@@ -332,7 +332,7 @@ const TOOLS_REVIEWS = [
     handle: "@oliviapark_yt",
     avatar: "https://randomuser.me/api/portraits/women/61.jpg",
     rating: 5,
-    text: "I've tried every downloader out there and StreamFetch is by far the most reliable. It handles every platform I throw at it with zero issues.",
+    text: "I've tried every downloader out there and YTSave is by far the most reliable. It handles every platform I throw at it with zero issues.",
     tag: "Video Downloader",
   },
   {
@@ -372,7 +372,7 @@ const TOOLS_REVIEWS = [
     handle: "@leokdev",
     avatar: "https://randomuser.me/api/portraits/men/28.jpg",
     rating: 5,
-    text: "StreamFetch is genuinely the best all-in-one media toolkit online. The UI is clean and every tool just works without needing a tutorial.",
+    text: "YTSave is genuinely the best all-in-one media toolkit online. The UI is clean and every tool just works without needing a tutorial.",
     tag: "All Tools",
   },
 ];

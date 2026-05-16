@@ -10,8 +10,8 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function Login() {
   useSEO({
-    title: "Log In – StreamFetch",
-    description: "Log in to your StreamFetch account to access your download history, manage your plan and use premium tools.",
+    title: "Log In – YTSave",
+    description: "Log in to your YTSave account to access your download history, manage your plan and use premium tools.",
     canonical: "/login",
     noindex: true,
   });

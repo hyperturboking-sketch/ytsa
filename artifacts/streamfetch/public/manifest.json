@@ -1,6 +1,6 @@
 {
-  "name": "StreamFetch – Video & Audio Downloader",
-  "short_name": "StreamFetch",
+  "name": "YTSave – Video & Audio Downloader",
+  "short_name": "YTSave",
   "description": "Download videos and audio from YouTube, TikTok, Twitter, Instagram and 1000+ sites.",
   "start_url": "./",
   "display": "standalone",
@@ -21,7 +21,7 @@
       "src": "/opengraph.jpg",
       "sizes": "1200x630",
       "type": "image/jpeg",
-      "label": "StreamFetch home page"
+      "label": "YTSave home page"
     }
   ]
 }

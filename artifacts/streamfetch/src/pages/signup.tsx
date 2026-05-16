@@ -10,8 +10,8 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function Signup() {
   useSEO({
-    title: "Create Free Account – StreamFetch",
-    description: "Sign up for StreamFetch to track your download history and unlock premium features like 4K downloads, AI transcription and batch downloading.",
+    title: "Create Free Account – YTSave",
+    description: "Sign up for YTSave to track your download history and unlock premium features like 4K downloads, AI transcription and batch downloading.",
     canonical: "/signup",
     noindex: true,
   });
@@ -31,7 +31,7 @@ export default function Signup() {
         data: { username, email, password }
       });
       setAuth(res.token, res.user);
-      toast({ title: "Account created!", description: "Welcome to StreamFetch." });
+      toast({ title: "Account created!", description: "Welcome to YTSave." });
       setLocation("/");
     } catch (err: any) {
       toast({

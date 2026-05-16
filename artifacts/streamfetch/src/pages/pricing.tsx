@@ -98,9 +98,9 @@ const trustBadges = [
 
 export default function Pricing() {
   useSEO({
-    title: "Pricing Plans – Free, Basic $1.99, Pro $5.99, Elite $8.99 | StreamFetch",
-    description: "StreamFetch is free to start. Upgrade to Basic ($1.99/mo) for ad-free downloads, Pro ($5.99/mo) for 4K quality and batch downloads, or Elite ($8.99/mo) for AI transcription and priority support.",
-    keywords: "streamfetch pricing, video downloader subscription, premium video downloader, ad-free downloader, 4k video downloader, batch downloader plan, youtube downloader pro",
+    title: "Pricing Plans – Free, Basic $1.99, Pro $5.99, Elite $8.99 | YTSave",
+    description: "YTSave is free to start. Upgrade to Basic ($1.99/mo) for ad-free downloads, Pro ($5.99/mo) for 4K quality and batch downloads, or Elite ($8.99/mo) for AI transcription and priority support.",
+    keywords: "ytsave pricing, video downloader subscription, premium video downloader, ad-free downloader, 4k video downloader, batch downloader plan, youtube downloader pro",
     canonical: "/pricing",
   });
 
@@ -157,7 +157,7 @@ export default function Pricing() {
           <span className="text-gradient">extraordinary value</span>
         </h1>
         <p className="text-lg text-muted-foreground">
-          Start free, upgrade when you're ready. Join 500,000+ users who switched to StreamFetch.
+          Start free, upgrade when you're ready. Join 500,000+ users who switched to YTSave.
         </p>
       </motion.div>
 

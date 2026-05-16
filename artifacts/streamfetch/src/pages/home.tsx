@@ -69,7 +69,7 @@ const fadeUp = (delay = 0) => ({
 
 export default function Home() {
   useSEO({
-    title: "StreamFetch – Free Video & Audio Downloader | YouTube, TikTok, Instagram, Twitter",
+    title: "YTSave – Free Video & Audio Downloader | YouTube, TikTok, Instagram, Twitter",
     description: "Download videos and audio from YouTube, TikTok, Twitter, Instagram, Facebook and 1000+ sites. Choose MP4 1080p/4K or MP3/M4A audio. 100% free, no software required.",
     keywords: "video downloader, youtube downloader, tiktok downloader, instagram downloader, twitter video downloader, facebook video downloader, mp4 downloader, mp3 downloader, youtube to mp3, youtube to mp4, free video downloader, online video downloader, audio extractor, download youtube videos",
     canonical: "/",
@@ -77,7 +77,7 @@ export default function Home() {
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "StreamFetch",
+        "name": "YTSave",
         "url": "https://fbf109c9-a25e-4b26-8f8e-4430fa6216da-00-3jx30vaggl6ui.worf.replit.dev/",
         "description": "Download videos and audio from YouTube, TikTok, Twitter, Instagram and 1000+ sites.",
         "applicationCategory": "MultimediaApplication",
@@ -98,10 +98,10 @@ export default function Home() {
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What video sites does StreamFetch support?",
+            "name": "What video sites does YTSave support?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "StreamFetch supports YouTube, TikTok, Twitter/X, Instagram, Facebook, Vimeo, Dailymotion, SoundCloud, Twitch and over 1000 other video sites powered by yt-dlp."
+              "text": "YTSave supports YouTube, TikTok, Twitter/X, Instagram, Facebook, Vimeo, Dailymotion, SoundCloud, Twitch and over 1000 other video sites powered by yt-dlp."
             }
           },
           {
@@ -114,10 +114,10 @@ export default function Home() {
           },
           {
             "@type": "Question",
-            "name": "Is StreamFetch free to use?",
+            "name": "Is YTSave free to use?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, StreamFetch is completely free for basic downloads. No software installation or account required. Premium plans unlock 4K quality, batch downloads, AI transcription and more."
+              "text": "Yes, YTSave is completely free for basic downloads. No software installation or account required. Premium plans unlock 4K quality, batch downloads, AI transcription and more."
             }
           },
           {
@@ -125,7 +125,7 @@ export default function Home() {
             "name": "Do I need to install anything?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. StreamFetch is a fully web-based tool. Just paste your video URL and click Analyze — no browser extensions or desktop software needed."
+              "text": "No. YTSave is a fully web-based tool. Just paste your video URL and click Analyze — no browser extensions or desktop software needed."
             }
           },
           {
@@ -133,7 +133,7 @@ export default function Home() {
             "name": "How do I download a YouTube video as MP3?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Paste the YouTube video URL into StreamFetch, click Analyze, then select an audio format (MP3 or M4A) and click Download."
+              "text": "Paste the YouTube video URL into YTSave, click Analyze, then select an audio format (MP3 or M4A) and click Download."
             }
           }
         ]
@@ -744,7 +744,7 @@ export default function Home() {
           <ToolReviews
             reviews={HOME_REVIEWS}
             title="Loved by 500,000+ users worldwide"
-            subtitle="Join creators, students, and professionals who download content with StreamFetch every day."
+            subtitle="Join creators, students, and professionals who download content with YTSave every day."
             ratingCount="12,400+"
           />
         </motion.div>
@@ -768,7 +768,7 @@ const HOME_REVIEWS = [
     handle: "@sarahk_vid",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     rating: 5,
-    text: "I download TikToks for my offline playlist all the time. StreamFetch is the only site that gives me clean MP4s without watermarks.",
+    text: "I download TikToks for my offline playlist all the time. YTSave is the only site that gives me clean MP4s without watermarks.",
     tag: "TikTok",
   },
   {
@@ -784,7 +784,7 @@ const HOME_REVIEWS = [
     handle: "@priya.clips",
     avatar: "https://randomuser.me/api/portraits/women/17.jpg",
     rating: 5,
-    text: "Tried downloading an Instagram reel that other sites couldn't handle — StreamFetch got it in 1080p no problem. Bookmarked forever.",
+    text: "Tried downloading an Instagram reel that other sites couldn't handle — YTSave got it in 1080p no problem. Bookmarked forever.",
     tag: "Instagram",
   },
   {

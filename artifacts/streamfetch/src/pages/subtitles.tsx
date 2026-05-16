@@ -41,7 +41,7 @@ function safeName(title?: string) {
 
 export default function SubtitlesPage() {
   useSEO({
-    title: "Subtitle Downloader – Extract & Generate YouTube Subtitles | StreamFetch",
+    title: "Subtitle Downloader – Extract & Generate YouTube Subtitles | YTSave",
     description: "Download YouTube subtitles as SRT or VTT files. Upload your own video/audio file to auto-generate subtitles with AI. Supports 99+ languages.",
     keywords: "subtitle downloader, youtube subtitles, srt download, vtt download, generate subtitles, ai subtitles, caption generator, youtube captions download",
     canonical: "/tools/subtitles",

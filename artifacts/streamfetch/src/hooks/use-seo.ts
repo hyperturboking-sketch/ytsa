@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SITE_NAME = "StreamFetch";
+const SITE_NAME = "YTSave";
 const BASE_URL = "https://fbf109c9-a25e-4b26-8f8e-4430fa6216da-00-3jx30vaggl6ui.worf.replit.dev";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/opengraph.jpg`;
 

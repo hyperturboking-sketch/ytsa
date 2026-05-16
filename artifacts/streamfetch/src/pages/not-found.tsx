@@ -5,7 +5,7 @@ import { useSEO } from "@/hooks/use-seo";
 
 export default function NotFound() {
   useSEO({
-    title: "404 – Page Not Found | StreamFetch",
+    title: "404 – Page Not Found | YTSave",
     description: "The page you are looking for could not be found.",
     noindex: true,
   });

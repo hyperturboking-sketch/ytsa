@@ -17,14 +17,14 @@ const features = [
 
 export default function Transcribe() {
   useSEO({
-    title: "AI Transcription – Convert YouTube Videos & Audio to Text | StreamFetch",
+    title: "AI Transcription – Convert YouTube Videos & Audio to Text | YTSave",
     description: "Instantly transcribe any YouTube video or audio file to text using Whisper AI. Supports 99+ languages with automatic detection. Paste a URL or upload your file and get accurate transcripts in seconds.",
     keywords: "youtube transcript, youtube to text, audio to text, video transcription, whisper ai transcription, speech to text online, youtube video transcript generator, audio transcription tool, convert video to text",
     canonical: "/tools/transcribe",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "StreamFetch AI Transcription",
+      "name": "YTSave AI Transcription",
       "description": "Convert any YouTube video or audio file to accurate text using Whisper AI. Supports 99+ languages.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Any",
@@ -433,7 +433,7 @@ export default function Transcribe() {
     <ToolReviews
       reviews={TRANSCRIBE_REVIEWS}
       title="Trusted by journalists, students & creators"
-      subtitle="See what people are saying about StreamFetch AI Transcription."
+      subtitle="See what people are saying about YTSave AI Transcription."
       ratingCount="3,200+"
     />
     </>

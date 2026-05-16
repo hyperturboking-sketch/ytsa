@@ -21,8 +21,8 @@ async function apiFetch(path: string, body: object) {
 
 export default function ForgotPassword() {
   useSEO({
-    title: "Forgot Password – StreamFetch",
-    description: "Reset your StreamFetch password.",
+    title: "Forgot Password – YTSave",
+    description: "Reset your YTSave password.",
     canonical: "/forgot-password",
     noindex: true,
   });
