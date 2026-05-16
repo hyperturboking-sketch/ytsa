@@ -8,6 +8,7 @@ import { useAuthStore } from "@/lib/auth";
 import { useLogout } from "@/hooks/use-api";
 import { useToast } from "@/hooks/use-toast";
 import { useTheme } from "@/hooks/use-theme";
+import AppLogo from "@/components/AppLogo";
 
 export default function Navbar() {
   const [location, setLocation] = useLocation();
@@ -70,12 +71,8 @@ export default function Navbar() {
           <div className="flex items-center h-[60px] gap-6">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-              <img
-                src={`${import.meta.env.BASE_URL}logo.png`}
-                alt="YTSave"
-                className="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(139,92,246,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(139,92,246,0.6)] group-hover:scale-105 transition-all duration-300"
-              />
+            <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+              <AppLogo size={28} className="group-hover:opacity-90 transition-opacity duration-200" />
               <span className="font-display font-bold text-xl tracking-tight text-white group-hover:text-white/90 transition-colors">
                 YTSave
               </span>
