@@ -70,13 +70,16 @@ export default function Navbar() {
           <div className="flex items-center h-[60px] gap-6">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <img
-                src={`${import.meta.env.BASE_URL}logo.png`}
-                alt="YTSave"
-                className="w-8 h-8 object-contain group-hover:scale-105 transition-all duration-300"
-              />
-              <span className="font-display font-bold text-base tracking-tight text-white group-hover:text-white/90 transition-colors">
+            <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+              <div className="relative">
+                <div className="absolute inset-0 bg-violet-500/40 rounded-xl blur-lg group-hover:bg-violet-400/60 transition-all duration-500" />
+                <img
+                  src={`${import.meta.env.BASE_URL}logo.png`}
+                  alt="YTSave"
+                  className="relative w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(139,92,246,0.8)] group-hover:scale-110 transition-all duration-300"
+                />
+              </div>
+              <span className="font-display font-bold text-lg tracking-tight text-white group-hover:text-white/90 transition-colors">
                 YTSave
               </span>
             </Link>
