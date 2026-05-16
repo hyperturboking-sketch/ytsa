@@ -1,5 +1,22 @@
 uploads = []
-generated = []
+
+[[generated]]
+id = "AK37YT7E6lgcc8njZMjRi"
+uri = "file://artifacts/streamfetch/public/logo.png"
+type = "image"
+title = "YTSave app logo"
+
+[[generated]]
+id = "XS2oIAYhihbqb8wN3HuVZ"
+uri = "file://artifacts/streamfetch/public/favicon.png"
+type = "image"
+title = "YTSave favicon icon"
+
+[[generated]]
+id = "7UehR-WEoGZr1BwFpGqV3"
+uri = "file://artifacts/streamfetch/public/logo-large.png"
+type = "image"
+title = "YTSave large hero logo"
 
 [[outputs]]
 id = "_sGduDWrnG3WY_GfHhKTy"

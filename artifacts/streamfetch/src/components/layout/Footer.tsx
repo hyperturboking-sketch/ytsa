@@ -10,14 +10,14 @@ export default function Footer() {
           <div className="md:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3 group mb-5">
               <div className="relative">
-                <div className="absolute inset-0 bg-violet-500/30 rounded-2xl blur-xl group-hover:bg-violet-400/50 transition-all duration-500" />
+                <div className="absolute -inset-3 bg-violet-500/30 rounded-3xl blur-2xl group-hover:bg-violet-400/50 transition-all duration-500 animate-[glow-pulse_3s_ease-in-out_infinite]" />
                 <img
                   src={`${import.meta.env.BASE_URL}logo.png`}
                   alt="YTSave"
-                  className="relative w-12 h-12 object-contain drop-shadow-[0_0_16px_rgba(139,92,246,0.4)] group-hover:drop-shadow-[0_0_24px_rgba(139,92,246,0.7)] group-hover:scale-110 transition-all duration-300"
+                  className="relative w-16 h-16 object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.5)] group-hover:drop-shadow-[0_0_32px_rgba(139,92,246,0.8)] group-hover:scale-110 transition-all duration-300"
                 />
               </div>
-              <span className="font-display font-bold text-2xl tracking-tight text-foreground">
+              <span className="font-display font-bold text-3xl tracking-tight text-foreground">
                 YTSave
               </span>
             </Link>
