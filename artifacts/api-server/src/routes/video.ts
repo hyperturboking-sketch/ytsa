@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { createReadStream } from "fs";
 import { stat } from "fs/promises";
+import { EventEmitter } from "events";
 import { analyzeVideo, downloadToFile } from "../services/ytdlp.js";
 import { AnalyzeVideoBody, DownloadVideoBody } from "@workspace/api-zod";
 import { Download } from "../models/Download.js";
@@ -12,6 +13,68 @@ const PRO_PLANS = ["pro", "elite"];
 const HIGH_RES_RESOLUTIONS = ["1440", "2160"];
 
 const router: IRouter = Router();
+
+// In-memory per-job progress emitter — auto-cleared after 10 min
+const jobEmitters = new Map<string, EventEmitter>();
+
+function getJobEmitter(jobId: string): EventEmitter {
+  let em = jobEmitters.get(jobId);
+  if (!em) {
+    em = new EventEmitter();
+    em.setMaxListeners(10);
+    jobEmitters.set(jobId, em);
+    setTimeout(() => jobEmitters.delete(jobId), 10 * 60 * 1000);
+  }
+  return em;
+}
+
+function parseYtDlpLine(line: string): object | null {
+  // [download]  45.2% of 123.45MiB at 5.23MiB/s ETA 00:23
+  const pMatch = line.match(
+    /\[download\]\s+(\d+\.?\d*)%(?:\s+of\s+[\d.]+\S+)?\s+at\s+([\d.]+\s*\S+)\s+ETA\s+(\S+)/
+  );
+  if (pMatch) {
+    return {
+      progress: Math.round(parseFloat(pMatch[1])),
+      status: "downloading",
+      speed: pMatch[2],
+      eta: pMatch[3],
+    };
+  }
+  if (line.includes("[Merger]") || line.toLowerCase().includes("merging formats")) {
+    return { progress: 97, status: "merging" };
+  }
+  return null;
+}
+
+// GET /download/progress/:jobId — SSE
+router.get("/download/progress/:jobId", (req, res) => {
+  const { jobId } = req.params;
+
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
+  res.flushHeaders();
+
+  const em = getJobEmitter(jobId);
+
+  const send = (data: object) => res.write(`data: ${JSON.stringify(data)}\n\n`);
+
+  const onProgress = (data: object) => send(data);
+  const onDone = () => { send({ progress: 100, status: "done" }); res.end(); };
+  const onFail = (msg: string) => { send({ status: "error", message: msg }); res.end(); };
+
+  em.on("progress", onProgress);
+  em.once("done", onDone);
+  em.once("fail", onFail);
+
+  req.on("close", () => {
+    em.off("progress", onProgress);
+    em.off("done", onDone);
+    em.off("fail", onFail);
+  });
+});
 
 // POST /analyze
 router.post("/analyze", optionalAuth, async (req: AuthRequest, res) => {
@@ -50,6 +113,8 @@ router.post("/download", optionalAuth, async (req: AuthRequest, res) => {
     }
 
     const { url, formatId, title } = parsed.data;
+    const jobId = typeof req.query.jobId === "string" ? req.query.jobId : null;
+    const em = jobId ? getJobEmitter(jobId) : null;
 
     // High-res formats require Pro or Elite plan
     const isHighRes = HIGH_RES_RESOLUTIONS.some(r => formatId.includes(r));
@@ -69,7 +134,6 @@ router.post("/download", optionalAuth, async (req: AuthRequest, res) => {
     const safeTitle = title.replace(/[^a-z0-9_\-\s]/gi, "_").substring(0, 100);
     const filename = `${safeTitle}.${ext}`;
 
-    // Save download record if user is logged in
     if (req.userId) {
       Download.create({
         userId: new mongoose.Types.ObjectId(req.userId),
@@ -80,11 +144,15 @@ router.post("/download", optionalAuth, async (req: AuthRequest, res) => {
       }).catch((e: unknown) => console.error("Failed to save download record:", e));
     }
 
-    // Download to a temp file first — required for merged (video+audio) and
-    // HLS streams because ffmpeg cannot write these to non-seekable stdout.
     const { filePath, cleanup } = await downloadToFile(url, formatId, ext, (line) => {
       console.log("yt-dlp:", line);
+      if (em) {
+        const event = parseYtDlpLine(line);
+        if (event) em.emit("progress", event);
+      }
     });
+
+    if (em) em.emit("done");
 
     const fileStream = createReadStream(filePath);
     const { size } = await stat(filePath);
@@ -95,9 +163,7 @@ router.post("/download", optionalAuth, async (req: AuthRequest, res) => {
 
     fileStream.pipe(res);
 
-    fileStream.on("end", () => {
-      cleanup();
-    });
+    fileStream.on("end", () => cleanup());
 
     fileStream.on("error", (err) => {
       console.error("File stream error:", err);

@@ -142,7 +142,13 @@ export default function Home() {
   });
   const [url, setUrl] = useState("");
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
-  const [downloadProgress, setDownloadProgress] = useState<{ formatId: string; progress: number } | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState<{
+    formatId: string;
+    progress: number;
+    status?: "preparing" | "downloading" | "merging" | "transferring" | "done";
+    speed?: string;
+    eta?: string;
+  } | null>(null);
 
   const analyzeMutation = useAnalyzeVideo();
   const { toast } = useToast();
@@ -176,11 +182,31 @@ export default function Home() {
   const handleDownload = async (format: VideoFormat) => {
     if (!videoInfo || downloadProgress) return;
 
+    const jobId = crypto.randomUUID();
+    let es: EventSource | null = null;
+
     try {
-      setDownloadProgress({ formatId: format.formatId, progress: 0 });
+      setDownloadProgress({ formatId: format.formatId, progress: 0, status: "preparing" });
+
+      // Open SSE stream to get real-time yt-dlp progress
+      es = new EventSource(`${import.meta.env.BASE_URL}api/download/progress/${jobId}`);
+      es.onmessage = (e) => {
+        try {
+          const data = JSON.parse(e.data);
+          if (data.status && data.status !== "done" && data.status !== "error") {
+            setDownloadProgress({
+              formatId: format.formatId,
+              progress: data.progress ?? 0,
+              status: data.status,
+              speed: data.speed,
+              eta: data.eta,
+            });
+          }
+        } catch {}
+      };
 
       const { token } = useAuthStore.getState();
-      const response = await fetch(`${import.meta.env.BASE_URL}api/download`, {
+      const response = await fetch(`${import.meta.env.BASE_URL}api/download?jobId=${jobId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -193,16 +219,22 @@ export default function Home() {
         }),
       });
 
+      es.close();
+      es = null;
+
       if (!response.ok) {
         const err = await response.json().catch(() => ({}));
         throw new Error(err.message || `Download failed (${response.status})`);
       }
 
+      // Stream file from server to browser with transfer progress
       const contentLength = response.headers.get("Content-Length");
       const total = contentLength ? parseInt(contentLength) : null;
       const reader = response.body!.getReader();
       const chunks: Uint8Array[] = [];
       let received = 0;
+
+      setDownloadProgress({ formatId: format.formatId, progress: 0, status: "transferring" });
 
       while (true) {
         const { done, value } = await reader.read();
@@ -213,11 +245,12 @@ export default function Home() {
           setDownloadProgress({
             formatId: format.formatId,
             progress: Math.min(99, Math.round((received / total) * 100)),
+            status: "transferring",
           });
         }
       }
 
-      setDownloadProgress({ formatId: format.formatId, progress: 100 });
+      setDownloadProgress({ formatId: format.formatId, progress: 100, status: "done" });
 
       const blob = new Blob(chunks);
       const blobUrl = window.URL.createObjectURL(blob);
@@ -235,6 +268,7 @@ export default function Home() {
         description: `${format.label} saved successfully.`,
       });
     } catch (err: any) {
+      es?.close();
       toast({
         title: "Download Failed",
         description: err.message || "An error occurred while downloading.",
@@ -509,12 +543,21 @@ export default function Home() {
                               {downloadProgress?.formatId === format.formatId && (
                                 <div className="mt-3">
                                   <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                                    <span>Downloading…</span>
+                                    <span>
+                                      {downloadProgress.status === "preparing" && "Preparing…"}
+                                      {downloadProgress.status === "downloading" && (
+                                        <>Downloading{downloadProgress.speed ? ` · ${downloadProgress.speed}` : ""}{downloadProgress.eta ? ` · ETA ${downloadProgress.eta}` : ""}</>
+                                      )}
+                                      {downloadProgress.status === "merging" && "Merging streams…"}
+                                      {downloadProgress.status === "transferring" && "Transferring…"}
+                                      {downloadProgress.status === "done" && "Done!"}
+                                      {!downloadProgress.status && "Downloading…"}
+                                    </span>
                                     <span>{downloadProgress.progress}%</span>
                                   </div>
                                   <div className="w-full h-1.5 bg-primary/10 rounded-full overflow-hidden">
                                     <div
-                                      className="h-full bg-primary rounded-full transition-all duration-200"
+                                      className="h-full bg-primary rounded-full transition-all duration-300"
                                       style={{ width: `${downloadProgress.progress}%` }}
                                     />
                                   </div>
@@ -564,12 +607,21 @@ export default function Home() {
                             {downloadProgress?.formatId === format.formatId && (
                               <div className="mt-3">
                                 <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                                  <span>Downloading…</span>
+                                  <span>
+                                    {downloadProgress.status === "preparing" && "Preparing…"}
+                                    {downloadProgress.status === "downloading" && (
+                                      <>Downloading{downloadProgress.speed ? ` · ${downloadProgress.speed}` : ""}{downloadProgress.eta ? ` · ETA ${downloadProgress.eta}` : ""}</>
+                                    )}
+                                    {downloadProgress.status === "merging" && "Merging streams…"}
+                                    {downloadProgress.status === "transferring" && "Transferring…"}
+                                    {downloadProgress.status === "done" && "Done!"}
+                                    {!downloadProgress.status && "Downloading…"}
+                                  </span>
                                   <span>{downloadProgress.progress}%</span>
                                 </div>
                                 <div className="w-full h-1.5 bg-accent/10 rounded-full overflow-hidden">
                                   <div
-                                    className="h-full bg-accent rounded-full transition-all duration-200"
+                                    className="h-full bg-accent rounded-full transition-all duration-300"
                                     style={{ width: `${downloadProgress.progress}%` }}
                                   />
                                 </div>
