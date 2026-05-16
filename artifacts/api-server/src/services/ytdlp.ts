@@ -67,7 +67,17 @@ export interface VideoInfo {
 const YTDLP_PATH = process.env.YTDLP_PATH || "/home/runner/.local/bin/yt-dlp";
 const TMP_DIR = process.env.TMP_DIR || "/tmp";
 
-const BASE_ARGS = ["--js-runtimes", "node"];
+const ARIA2C_PATH = (() => {
+  try {
+    const { execSync } = require("child_process");
+    return execSync("which aria2c", { encoding: "utf8" }).trim();
+  } catch { return null; }
+})();
+
+const BASE_ARGS = [
+  "--js-runtimes", "node",
+  "--extractor-args", "youtube:player_client=ios,web",
+];
 
 function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -338,13 +348,13 @@ export async function downloadToFile(
     ];
   } else {
     // Video: merge best video+audio streams with ffmpeg.
-    // --concurrent-fragments downloads multiple DASH/HLS chunks in parallel,
-    // which significantly speeds up high-res (1440p/4K) downloads.
+    // Use aria2c as external downloader if available for faster parallel segment downloads.
     args = [
       "-f", formatId,
       "--merge-output-format", "mp4",
-      "--concurrent-fragments", "5",
-      "--buffer-size", "128K",
+      ...(ARIA2C_PATH
+        ? ["--external-downloader", ARIA2C_PATH, "--external-downloader-args", "aria2c:-x5 -s5 -k1M"]
+        : ["--concurrent-fragments", "5", "--buffer-size", "128K"]),
       "-o", outTemplate,
       "--no-playlist",
       url,
