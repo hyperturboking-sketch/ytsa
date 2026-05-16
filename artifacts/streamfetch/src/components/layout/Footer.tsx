@@ -9,11 +9,13 @@ export default function Footer() {
 
           <div className="md:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2.5 group mb-5">
-              <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-primary to-cyan-500 shadow-md shadow-primary/20">
-                <Download className="w-4 h-4 text-white" />
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}logo.png`}
+                alt="StreamFetch"
+                className="w-10 h-10 object-contain group-hover:scale-105 transition-all duration-300"
+              />
               <span className="font-display font-bold text-xl tracking-tight text-foreground">
-                YTSave
+                StreamFetch
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
@@ -70,7 +72,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} YTSave. All rights reserved.
+            © {new Date().getFullYear()} StreamFetch. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground/50">
             Supports 1000+ sites · Powered by yt-dlp

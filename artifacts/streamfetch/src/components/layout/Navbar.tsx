@@ -71,11 +71,13 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-[#ab76d1] to-[#7c3aed] shadow-md shadow-purple-500/30 group-hover:scale-105 transition-all duration-300">
-                <Download className="w-3.5 h-3.5 text-white" />
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}logo.png`}
+                alt="StreamFetch"
+                className="w-8 h-8 object-contain group-hover:scale-105 transition-all duration-300"
+              />
               <span className="font-display font-bold text-base tracking-tight text-white group-hover:text-white/90 transition-colors">
-                YTSave
+                StreamFetch
               </span>
             </Link>
 

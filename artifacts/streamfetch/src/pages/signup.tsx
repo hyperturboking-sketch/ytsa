@@ -31,7 +31,7 @@ export default function Signup() {
         data: { username, email, password }
       });
       setAuth(res.token, res.user);
-      toast({ title: "Account created!", description: "Welcome to YTSave." });
+      toast({ title: "Account created!", description: "Welcome to StreamFetch." });
       setLocation("/");
     } catch (err: any) {
       toast({
