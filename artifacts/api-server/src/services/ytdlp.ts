@@ -64,7 +64,7 @@ export interface VideoInfo {
   formats: VideoFormat[];
 }
 
-const YTDLP_PATH = process.env.YTDLP_PATH || "yt-dlp";
+const YTDLP_PATH = process.env.YTDLP_PATH || "/home/runner/.local/bin/yt-dlp";
 const TMP_DIR = process.env.TMP_DIR || "/tmp";
 
 function runYtDlp(args: string[]): Promise<string> {
