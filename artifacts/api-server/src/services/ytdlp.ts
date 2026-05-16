@@ -343,8 +343,8 @@ export async function downloadToFile(
     args = [
       "-f", formatId,
       "--merge-output-format", "mp4",
-      "--concurrent-fragments", "16",
-      "--buffer-size", "256K",
+      "--concurrent-fragments", "5",
+      "--buffer-size", "128K",
       "-o", outTemplate,
       "--no-playlist",
       url,
