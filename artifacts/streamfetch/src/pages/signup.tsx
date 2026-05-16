@@ -44,9 +44,10 @@ export default function Signup() {
 
   return (
     <div className="min-h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4 bg-gradient-to-b from-secondary to-background">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 30, filter: "blur(8px)" }}
+        animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md"
       >
         <div className="bg-card border border-border shadow-xl p-8 sm:p-10 rounded-3xl relative overflow-hidden">

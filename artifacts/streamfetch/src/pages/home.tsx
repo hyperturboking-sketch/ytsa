@@ -61,8 +61,8 @@ const PLATFORMS = [
 ];
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
+  initial: { opacity: 0, y: 40, filter: "blur(4px)", scale: 0.98 },
+  whileInView: { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 },
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] },
 });
@@ -263,20 +263,20 @@ export default function Home() {
 
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, type: "spring", stiffness: 200, damping: 20 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary dark:bg-white/10 dark:border-white/15 dark:text-white/90 text-sm font-semibold mb-8 backdrop-blur-sm shadow-sm"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 animate-[float-orbit_6s_ease-in-out_infinite]" />
             <span>Lightning fast extraction</span>
           </motion.div>
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="text-6xl md:text-8xl font-extrabold tracking-tight text-gray-900 dark:text-white max-w-5xl leading-[1.05]"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
@@ -292,9 +292,9 @@ export default function Home() {
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 text-lg md:text-xl text-gray-600 dark:text-white/55 max-w-2xl leading-relaxed font-medium"
           >
             Paste a link from YouTube, Twitter, TikTok, or anywhere else. We'll extract
@@ -303,13 +303,13 @@ export default function Home() {
 
           {/* URL INPUT FORM */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, y: 40, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.3, type: "spring", stiffness: 150, damping: 18 }}
             className="w-full max-w-3xl mt-12 relative z-20"
           >
             <form onSubmit={handleAnalyze} className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-600 rounded-2xl blur opacity-20 group-hover:opacity-35 transition duration-500 animate-gradient-x" style={{backgroundSize: '200% auto'}} />
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-600 rounded-2xl blur opacity-20 group-hover:opacity-40 group-focus-within:opacity-50 transition duration-700 animate-gradient-x" style={{backgroundSize: '200% auto'}} />
               <div className="relative flex items-center bg-white dark:bg-white/8 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/20 shadow-xl dark:shadow-2xl p-2 pl-6 overflow-hidden">
                 <Link2 className="w-6 h-6 text-gray-400 dark:text-white/40 mr-3 flex-shrink-0" />
                 <input
@@ -337,26 +337,34 @@ export default function Home() {
 
           {/* Supported platforms */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="mt-10 w-full max-w-3xl"
           >
             <p className="text-xs text-gray-400 dark:text-white/30 uppercase tracking-widest mb-4 font-semibold">Supports 1000+ sites including</p>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {PLATFORMS.map((p) => (
-                <div
+              {PLATFORMS.map((p, pi) => (
+                <motion.div
                   key={p.name}
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.6 + pi * 0.05, type: "spring", stiffness: 300, damping: 20 }}
                   className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-primary/40 dark:hover:border-white/25 hover:bg-white dark:hover:bg-white/10 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default backdrop-blur-sm"
                   title={p.name}
                 >
                   <span className="w-5 h-5 flex-shrink-0" style={{ color: p.color }} dangerouslySetInnerHTML={{ __html: p.svg }} />
                   <span className="text-sm font-semibold text-gray-700 dark:text-white/70">{p.name}</span>
-                </div>
+                </motion.div>
               ))}
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/40 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.6 + PLATFORMS.length * 0.05, type: "spring", stiffness: 300, damping: 20 }}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/40 backdrop-blur-sm"
+              >
                 <span className="text-sm font-semibold">& 1000+ more</span>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -364,7 +372,10 @@ export default function Home() {
 
       {/* STATS STRIP */}
       <motion.div
-        {...fadeUp()}
+        initial={{ opacity: 0, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, filter: "blur(0px)" }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="w-full border-y border-border/60 bg-gradient-to-r from-secondary/50 via-background to-secondary/50 dark:bg-secondary/30 py-12"
       >
         <div className="max-w-4xl mx-auto px-4 grid grid-cols-3 divide-x divide-border/50">
