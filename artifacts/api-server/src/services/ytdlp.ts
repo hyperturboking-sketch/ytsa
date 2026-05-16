@@ -67,9 +67,11 @@ export interface VideoInfo {
 const YTDLP_PATH = process.env.YTDLP_PATH || "/home/runner/.local/bin/yt-dlp";
 const TMP_DIR = process.env.TMP_DIR || "/tmp";
 
+const BASE_ARGS = ["--js-runtimes", "node"];
+
 function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    const proc = spawn(YTDLP_PATH, args, { timeout: 60000 });
+    const proc = spawn(YTDLP_PATH, [...BASE_ARGS, ...args], { timeout: 60000 });
     let stdout = "";
     let stderr = "";
 
@@ -351,7 +353,7 @@ export async function downloadToFile(
 
   try {
     await new Promise<void>((resolve, reject) => {
-      const proc = spawn(YTDLP_PATH, args, { timeout: 600000 });
+      const proc = spawn(YTDLP_PATH, [...BASE_ARGS, ...args], { timeout: 600000 });
       let stderr = "";
 
       proc.stdout.on("data", (_d: Buffer) => {
