@@ -71,14 +71,11 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-              <div className="relative">
-                <div className="absolute -inset-2 bg-violet-500/50 rounded-2xl blur-xl group-hover:bg-violet-400/70 transition-all duration-500 animate-[glow-pulse_3s_ease-in-out_infinite]" />
-                <img
-                  src={`${import.meta.env.BASE_URL}logo.png`}
-                  alt="YTSave"
-                  className="relative w-14 h-14 object-contain drop-shadow-[0_0_16px_rgba(139,92,246,0.6)] group-hover:drop-shadow-[0_0_28px_rgba(139,92,246,0.9)] group-hover:scale-115 transition-all duration-300"
-                />
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}logo.png`}
+                alt="YTSave"
+                className="w-14 h-14 object-contain drop-shadow-[0_0_16px_rgba(139,92,246,0.5)] group-hover:drop-shadow-[0_0_24px_rgba(139,92,246,0.7)] group-hover:scale-110 transition-all duration-300"
+              />
               <span className="font-display font-bold text-xl tracking-tight text-white group-hover:text-white/90 transition-colors">
                 YTSave
               </span>
