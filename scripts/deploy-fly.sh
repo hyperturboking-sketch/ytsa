@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
+# Always run from the repo root (parent of this script's directory)
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
 APP_NAME="${FLY_APP_NAME:-streamfetch}"
+
+echo "==> Working directory: $ROOT_DIR"
+echo "==> App name: $APP_NAME"
 
 echo "==> Checking flyctl..."
 if ! command -v flyctl &>/dev/null; then
@@ -28,7 +35,7 @@ printf '%s\n' \
   | flyctl secrets import --app "$APP_NAME"
 
 echo "==> Deploying to Fly.io..."
-flyctl deploy --app "$APP_NAME" --remote-only
+flyctl deploy --config "$ROOT_DIR/fly.toml" --app "$APP_NAME" --remote-only
 
 echo ""
 echo "Done! Your app is live at: https://${APP_NAME}.fly.dev"
