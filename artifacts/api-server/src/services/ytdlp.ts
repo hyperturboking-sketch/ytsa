@@ -75,8 +75,7 @@ const ARIA2C_PATH = (() => {
 })();
 
 const BASE_ARGS = [
-  "--js-runtimes", "node",
-  "--extractor-args", "youtube:player_client=tv,web",
+  "--extractor-args", "youtube:player_client=android_vr",
 ];
 
 function runYtDlp(args: string[]): Promise<string> {
