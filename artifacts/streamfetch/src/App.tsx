@@ -40,26 +40,30 @@ const PageFallback = () => (
 
 function Router() {
   return (
-    <AppLayout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/admin">
-          <Suspense fallback={<PageFallback />}>
-            <Admin />
-          </Suspense>
-        </Route>
-        <Route path="/pricing" component={Pricing} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/tools" component={Tools} />
-        <Route path="/tools/transcribe" component={Transcribe} />
-        <Route path="/tools/subtitles" component={Subtitles} />
-        <Route component={NotFound} />
-      </Switch>
-    </AppLayout>
+    <Switch>
+      <Route path="/checkout" component={Checkout} />
+      <Route>
+        <AppLayout>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/admin">
+              <Suspense fallback={<PageFallback />}>
+                <Admin />
+              </Suspense>
+            </Route>
+            <Route path="/pricing" component={Pricing} />
+            <Route path="/tools" component={Tools} />
+            <Route path="/tools/transcribe" component={Transcribe} />
+            <Route path="/tools/subtitles" component={Subtitles} />
+            <Route component={NotFound} />
+          </Switch>
+        </AppLayout>
+      </Route>
+    </Switch>
   );
 }
 
