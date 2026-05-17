@@ -332,6 +332,8 @@ export async function downloadToFile(
       "-x",
       "--audio-format", "mp3",
       "--audio-quality", "192K",
+      "--concurrent-fragments", "8",
+      "--buffer-size", "16M",
       "-o", outTemplate,
       "--no-playlist",
       url,
@@ -341,6 +343,8 @@ export async function downloadToFile(
       "-f", "bestaudio",
       "-x",
       "--audio-format", "m4a",
+      "--concurrent-fragments", "8",
+      "--buffer-size", "16M",
       "-o", outTemplate,
       "--no-playlist",
       url,
@@ -352,8 +356,8 @@ export async function downloadToFile(
       "-f", formatId,
       "--merge-output-format", "mp4",
       ...(ARIA2C_PATH
-        ? ["--external-downloader", ARIA2C_PATH, "--external-downloader-args", "aria2c:-x5 -s5 -k1M"]
-        : ["--concurrent-fragments", "5", "--buffer-size", "128K"]),
+        ? ["--external-downloader", ARIA2C_PATH, "--external-downloader-args", "aria2c:-x16 -s16 -k10M"]
+        : ["--concurrent-fragments", "16", "--buffer-size", "16M", "--http-chunk-size", "10M"]),
       "-o", outTemplate,
       "--no-playlist",
       url,
