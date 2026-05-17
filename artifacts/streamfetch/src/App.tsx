@@ -16,6 +16,7 @@ import Tools from "@/pages/tools";
 import Transcribe from "@/pages/transcribe";
 import Subtitles from "@/pages/subtitles";
 import ForgotPassword from "@/pages/forgot-password";
+import Checkout from "@/pages/checkout";
 import NotFound from "@/pages/not-found";
 
 const Admin = lazy(() => import("@/pages/admin"));
@@ -52,6 +53,7 @@ function Router() {
           </Suspense>
         </Route>
         <Route path="/pricing" component={Pricing} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/tools" component={Tools} />
         <Route path="/tools/transcribe" component={Transcribe} />
         <Route path="/tools/subtitles" component={Subtitles} />

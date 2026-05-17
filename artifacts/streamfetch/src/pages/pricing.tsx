@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { Check, Zap, Star, Crown, Shield, Clock, Sparkles, ArrowRight, BadgePercent } from "lucide-react";
 import { useSEO } from "@/hooks/use-seo";
-import PaymentModal from "@/components/PaymentModal";
 import { useToast } from "@/hooks/use-toast";
 
 const plans = [
@@ -105,10 +104,8 @@ export default function Pricing() {
   });
 
   const [isAnnual, setIsAnnual] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const { toast } = useToast();
-  const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
-  const [selectedPlanKey, setSelectedPlanKey] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -119,14 +116,8 @@ export default function Pricing() {
     }
   }, [location]);
 
-  const openModal = (plan: typeof plans[0], key: string) => {
-    setSelectedPlan(plan);
-    setSelectedPlanKey(key);
-  };
-
-  const closeModal = () => {
-    setSelectedPlan(null);
-    setSelectedPlanKey(null);
+  const openCheckout = (plan: typeof plans[0]) => {
+    navigate(`/checkout?plan=${plan.name.toLowerCase()}&billing=${isAnnual ? "annual" : "monthly"}`);
   };
 
   const getMonthlyOriginal = (plan: typeof plans[0]) => plan.fakeMonthlyPrice.toFixed(2);
@@ -325,7 +316,7 @@ export default function Pricing() {
 
                 {/* CTA */}
                 <button
-                  onClick={() => openModal(plan, plan.name.toLowerCase())}
+                  onClick={() => openCheckout(plan)}
                   className={`w-full py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 ${plan.ctaClass}`}
                 >
                   {plan.cta}
@@ -374,18 +365,6 @@ export default function Pricing() {
         </p>
       </motion.div>
 
-      <PaymentModal
-        plan={selectedPlan ? {
-          name: selectedPlan.name,
-          price: isAnnual
-            ? `$${getAnnualDiscounted(selectedPlan)}/yr`
-            : `$${getMonthlyPrice(selectedPlan)}/mo`,
-          cta: selectedPlan.cta,
-          billing: isAnnual ? "annual" : "monthly",
-        } : null}
-        planKey={selectedPlanKey}
-        onClose={closeModal}
-      />
     </div>
   );
 }
