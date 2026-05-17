@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Clock, Tag } from "lucide-react";
 import { BLOG_POSTS, formatDate } from "@/data/blog-posts";
 import { useSEO } from "@/hooks/use-seo";
+import BlogCover from "@/components/BlogCover";
 
 const categoryColors: Record<string, string> = {
   Tutorials: "bg-violet-100 text-violet-700 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700",
@@ -30,11 +31,9 @@ export default function Blog() {
   return (
     <div className="w-full flex flex-col items-center">
 
-      {/* HERO */}
-      <section className="w-full py-12 sm:py-20 border-b border-border bg-gradient-to-b from-violet-50/70 via-background to-background dark:from-violet-950/20 dark:via-background relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-violet-200/40 to-indigo-100/20 dark:from-violet-900/20 dark:to-transparent blur-3xl" />
-        </div>
+      {/* PAGE HEADER */}
+      <section className="w-full py-10 sm:py-16 border-b border-border bg-gradient-to-b from-violet-50/70 via-background to-background dark:from-violet-950/20 dark:via-background relative overflow-hidden">
+        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-violet-200/40 to-indigo-100/20 dark:from-violet-900/20 dark:to-transparent blur-3xl pointer-events-none" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
@@ -57,76 +56,91 @@ export default function Blog() {
         </div>
       </section>
 
-      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 
         {/* FEATURED POST */}
-        <motion.div {...fadeUp(0)} className="mb-10 sm:mb-14">
+        <motion.div {...fadeUp(0)} className="mb-10 sm:mb-12">
           <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Featured</p>
           <Link href={`/blog/${featured.slug}`}>
-            <div className="group relative rounded-3xl overflow-hidden border border-border bg-card hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer">
-              <div className={`h-2 w-full bg-gradient-to-r ${featured.coverGradient}`} />
-              <div className="p-6 sm:p-10 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start">
-                <div className={`w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 rounded-2xl bg-gradient-to-br ${featured.coverGradient} flex items-center justify-center text-3xl sm:text-4xl shadow-lg`}>
-                  {featured.coverEmoji}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${categoryColors[featured.category] ?? "bg-secondary text-foreground border-border"}`}>
-                      {featured.category}
-                    </span>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Clock className="w-3 h-3" /> {featured.readTime} min read
-                    </span>
-                    <span className="text-xs text-muted-foreground">{formatDate(featured.publishedAt)}</span>
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
-                    {featured.title}
-                  </h2>
-                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">{featured.excerpt}</p>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-200">
-                    Read article <ArrowRight className="w-4 h-4" />
+            <div className="group rounded-3xl overflow-hidden border border-border bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300 cursor-pointer">
+              {/* Cover image */}
+              <div className="relative overflow-hidden">
+                <BlogCover
+                  emoji={featured.coverEmoji}
+                  gradient={featured.coverGradient}
+                  pattern={featured.coverPattern}
+                  size="card"
+                  className="h-48 sm:h-72 group-hover:scale-[1.02] transition-transform duration-500"
+                />
+                {/* Category badge overlaid on cover */}
+                <div className="absolute top-4 left-4">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-lg">
+                    {featured.category}
                   </span>
                 </div>
+                <div className="absolute top-4 right-4">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium shadow-lg">
+                    <Clock className="w-3 h-3" /> {featured.readTime} min read
+                  </span>
+                </div>
+              </div>
+
+              {/* Card body */}
+              <div className="p-5 sm:p-8">
+                <p className="text-xs text-muted-foreground mb-2">{formatDate(featured.publishedAt)}</p>
+                <h2 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
+                  {featured.title}
+                </h2>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">{featured.excerpt}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-200">
+                  Read article <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
             </div>
           </Link>
         </motion.div>
 
-        {/* REST OF POSTS */}
+        {/* ALL OTHER POSTS */}
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">All Articles</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">All Articles</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {rest.map((post, i) => (
-              <motion.div key={post.slug} {...fadeUp(i * 0.07)}>
+              <motion.div key={post.slug} {...fadeUp(i * 0.06)} className="h-full">
                 <Link href={`/blog/${post.slug}`}>
-                  <div className="group h-full rounded-2xl border border-border bg-card hover:border-primary/40 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden flex flex-col">
-                    <div className={`h-1.5 w-full bg-gradient-to-r ${post.coverGradient}`} />
-                    <div className="p-5 sm:p-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${post.coverGradient} flex items-center justify-center text-xl shadow-sm flex-shrink-0`}>
-                          {post.coverEmoji}
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${categoryColors[post.category] ?? "bg-secondary text-foreground border-border"}`}>
-                            {post.category}
-                          </span>
-                          <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
-                            <Clock className="w-3 h-3" /> {post.readTime} min
-                          </span>
-                        </div>
-                      </div>
-                      <h3 className="font-display font-bold text-base sm:text-lg text-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
-                        {post.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4 line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                      <div className="flex items-center justify-between mt-auto">
-                        <span className="text-xs text-muted-foreground/70">{formatDate(post.publishedAt)}</span>
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary group-hover:gap-2 transition-all duration-200">
-                          Read <ArrowRight className="w-3.5 h-3.5" />
+                  <div className="group h-full rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col">
+
+                    {/* Cover */}
+                    <div className="relative overflow-hidden flex-shrink-0">
+                      <BlogCover
+                        emoji={post.coverEmoji}
+                        gradient={post.coverGradient}
+                        pattern={post.coverPattern}
+                        size="card"
+                        className="h-36 sm:h-44 group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 left-3">
+                        <span className={`text-[10px] font-bold px-2 py-1 rounded-lg border backdrop-blur-sm ${categoryColors[post.category] ?? "bg-secondary text-foreground border-border"}`}>
+                          {post.category}
                         </span>
                       </div>
+                    </div>
+
+                    {/* Body */}
+                    <div className="p-4 sm:p-5 flex flex-col flex-1">
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                        <Clock className="w-3 h-3 flex-shrink-0" />
+                        <span>{post.readTime} min read</span>
+                        <span className="ml-auto">{formatDate(post.publishedAt)}</span>
+                      </div>
+                      <h3 className="font-display font-bold text-sm sm:text-base text-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
+                        {post.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3 mb-3">
+                        {post.excerpt}
+                      </p>
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary group-hover:gap-1.5 transition-all mt-auto">
+                        Read article <ArrowRight className="w-3 h-3" />
+                      </span>
                     </div>
                   </div>
                 </Link>

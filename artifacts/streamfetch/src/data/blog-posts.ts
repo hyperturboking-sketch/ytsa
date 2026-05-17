@@ -8,6 +8,7 @@ export interface BlogPost {
   publishedAt: string;
   coverEmoji: string;
   coverGradient: string;
+  coverPattern: "dots" | "grid" | "waves" | "crosses" | "diagonal";
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -20,6 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: "2025-05-10",
     coverEmoji: "🎬",
     coverGradient: "from-red-500 to-rose-600",
+    coverPattern: "grid",
     content: `
 ## Why Download YouTube Videos?
 
@@ -84,6 +86,7 @@ Playlist and batch downloads are available on the **Pro** plan. Paste any playli
     publishedAt: "2025-05-03",
     coverEmoji: "🎵",
     coverGradient: "from-violet-500 to-indigo-600",
+    coverPattern: "waves",
     content: `
 ## The Core Difference
 
@@ -131,6 +134,7 @@ Sometimes you want the video now and the audio later. With YTSave you can downlo
     publishedAt: "2025-04-25",
     coverEmoji: "🎵",
     coverGradient: "from-pink-500 to-rose-500",
+    coverPattern: "diagonal",
     content: `
 ## The TikTok Watermark Problem
 
@@ -172,6 +176,7 @@ TikTok Stories are treated like regular videos — paste the share link and YTSa
     publishedAt: "2025-04-18",
     coverEmoji: "📽️",
     coverGradient: "from-amber-500 to-orange-600",
+    coverPattern: "dots",
     content: `
 ## What Is a Video Format?
 
@@ -235,6 +240,7 @@ If you need a specific codec or container for professional work, use the downloa
     publishedAt: "2025-04-10",
     coverEmoji: "📸",
     coverGradient: "from-pink-500 to-purple-600",
+    coverPattern: "crosses",
     content: `
 ## Why Instagram Makes Downloading Hard
 
@@ -293,6 +299,7 @@ YTSave cannot download content from **private Instagram accounts** — only publ
     publishedAt: "2025-04-02",
     coverEmoji: "🎧",
     coverGradient: "from-emerald-500 to-teal-600",
+    coverPattern: "waves",
     content: `
 ## Why Extract Audio from YouTube?
 
