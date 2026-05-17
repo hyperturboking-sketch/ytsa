@@ -39,7 +39,7 @@ args = "PORT=8080 pnpm --filter @workspace/api-server run dev & pnpm --filter @w
 waitForPort = 5000
 
 [agent]
-stack = "PNPM_WORKSPACE"
+stack = "BEST_EFFORT_FALLBACK"
 expertMode = true
 
 [postMerge]
@@ -53,17 +53,11 @@ packages = ["yt-dlp"]
 [userenv]
 
 [userenv.shared]
-MONGODB_URI = "mongodb+srv://hyperturboking_db_user:BHARAT123@cluster0.tf3cqla.mongodb.net/?appName=Cluster0"
 PORT = "5000"
 API_PORT = "8080"
 VITE_GOOGLE_CLIENT_ID = "27328018611-c7n2q31dii1bee41jhn0jqfcd4skgn3j.apps.googleusercontent.com"
 GOOGLE_CLIENT_ID = "27328018611-c7n2q31dii1bee41jhn0jqfcd4skgn3j.apps.googleusercontent.com"
-NOWPAYMENTS_API_KEY = "E1WF6J1-E0CMSZ8-PYV2AS2-19R6QSJ"
-NOWPAYMENTS_IPN_SECRET = "awcU45e7Pn1KwJ77CYhvAaTk4HLSDOas"
 EMAIL_USER = "ytsavetools@gmail.com"
-EMAIL_PASS = "qzat dwqi alod hoqt"
-GROQ_API_KEY = "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"
-JWT_SECRET = "021a02bf5ca9c8ee63ec1447893714c304c8798a740c2c29a5250378638f63ed5b2ee202e5e9f853d1b1df6e0a2dcf53"
 
 [userenv.development]
 NODE_ENV = "development"
