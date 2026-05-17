@@ -76,7 +76,7 @@ const ARIA2C_PATH = (() => {
 
 const BASE_ARGS = [
   "--js-runtimes", "node",
-  "--extractor-args", "youtube:player_client=ios,web",
+  "--extractor-args", "youtube:player_client=tv,web",
 ];
 
 function runYtDlp(args: string[]): Promise<string> {
@@ -224,7 +224,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
 
   const formats: VideoFormat[] = [
     ...(has2160 ? [{
-      formatId: "bestvideo[height<=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=2160]+bestaudio/best[height<=2160]",
+      formatId: "bestvideo[height<=2160]+bestaudio/bestvideo[height<=2160][ext=mp4]+bestaudio[ext=m4a]/best[height<=2160]/best",
       label: "2160p 4K MP4",
       ext: "mp4",
       resolution: "2160p",
@@ -233,7 +233,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
       requiresPro: true,
     }] : []),
     ...(has1440 ? [{
-      formatId: "bestvideo[height<=1440][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1440]+bestaudio/best[height<=1440]",
+      formatId: "bestvideo[height<=1440]+bestaudio/bestvideo[height<=1440][ext=mp4]+bestaudio[ext=m4a]/best[height<=1440]/best",
       label: "1440p QHD MP4",
       ext: "mp4",
       resolution: "1440p",
@@ -242,7 +242,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
       requiresPro: true,
     }] : []),
     {
-      formatId: "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1080]+bestaudio/best[height<=1080]",
+      formatId: "bestvideo[height<=1080]+bestaudio/bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080]/best",
       label: "1080p MP4",
       ext: "mp4",
       resolution: "1080p",
@@ -250,7 +250,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
       type: "video",
     },
     {
-      formatId: "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best[height<=720]",
+      formatId: "bestvideo[height<=720]+bestaudio/bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720]/best",
       label: "720p MP4",
       ext: "mp4",
       resolution: "720p",
@@ -258,7 +258,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
       type: "video",
     },
     {
-      formatId: "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=480]+bestaudio/best[height<=480]",
+      formatId: "bestvideo[height<=480]+bestaudio/bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/best[height<=480]/best",
       label: "480p MP4",
       ext: "mp4",
       resolution: "480p",
@@ -266,7 +266,7 @@ export async function analyzeVideo(url: string): Promise<VideoInfo> {
       type: "video",
     },
     {
-      formatId: "bestvideo[height<=360][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=360]+bestaudio/best[height<=360]",
+      formatId: "bestvideo[height<=360]+bestaudio/bestvideo[height<=360][ext=mp4]+bestaudio[ext=m4a]/best[height<=360]/best",
       label: "360p MP4",
       ext: "mp4",
       resolution: "360p",
