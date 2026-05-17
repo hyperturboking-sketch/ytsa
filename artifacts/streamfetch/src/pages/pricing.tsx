@@ -127,7 +127,7 @@ export default function Pricing() {
   const getAnnualPerMonth = (plan: typeof plans[0]) => (plan.monthlyPrice * 0.8).toFixed(2);
 
   return (
-    <div className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center px-4 py-16 overflow-hidden relative">
+    <div className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center px-4 py-8 sm:py-16 overflow-hidden relative">
 
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-violet-50/60 via-background to-background dark:from-violet-950/20 dark:via-background" />
@@ -138,16 +138,16 @@ export default function Pricing() {
         initial={{ opacity: 0, y: 30, filter: "blur(8px)", scale: 0.97 }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center mb-10 max-w-2xl"
+        className="text-center mb-6 sm:mb-10 max-w-2xl"
       >
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/40 border border-violet-200 dark:border-violet-700 text-violet-700 dark:text-violet-300 text-xs font-semibold uppercase tracking-wider mb-5">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/40 border border-violet-200 dark:border-violet-700 text-violet-700 dark:text-violet-300 text-xs font-semibold uppercase tracking-wider mb-4">
           <Sparkles className="w-3.5 h-3.5" /> Limited-time offer
         </span>
-        <h1 className="text-4xl md:text-6xl font-display font-extrabold text-foreground tracking-tight mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-display font-extrabold text-foreground tracking-tight mb-3 leading-tight">
           Simple pricing,<br />
           <span className="text-gradient">extraordinary value</span>
         </h1>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-base sm:text-lg text-muted-foreground">
           Start free, upgrade when you're ready. Join 500,000+ users who switched to YTSave.
         </p>
       </motion.div>
@@ -157,7 +157,7 @@ export default function Pricing() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.15, duration: 0.4 }}
-        className="flex items-center gap-4 mb-12"
+        className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12"
       >
         <span className={`text-sm font-semibold transition-colors ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
           Monthly
@@ -195,7 +195,7 @@ export default function Pricing() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-60px" }}
-        className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch"
+        className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 items-stretch"
       >
         {plans.map((plan) => {
           const Icon = plan.icon;
@@ -232,7 +232,7 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="relative z-10 flex flex-col flex-1 p-7">
+              <div className="relative z-10 flex flex-col flex-1 p-5 sm:p-7">
                 {/* Icon + plan name */}
                 <div className="flex items-center gap-3 mb-5">
                   <div className={`w-11 h-11 rounded-2xl flex items-center justify-center border ${plan.iconBg}`}>

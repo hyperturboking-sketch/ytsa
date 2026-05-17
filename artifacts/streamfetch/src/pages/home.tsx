@@ -283,7 +283,7 @@ export default function Home() {
     <div className="w-full flex flex-col items-center">
       
       {/* HERO SECTION */}
-      <section className="hero-gradient w-full relative pt-28 pb-24 flex flex-col items-center text-center overflow-hidden">
+      <section className="hero-gradient w-full relative pt-20 sm:pt-28 pb-12 sm:pb-24 flex flex-col items-center text-center overflow-hidden">
         <HeroScene />
 
         {/* Light-mode decorative rings */}
@@ -300,7 +300,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, type: "spring", stiffness: 200, damping: 20 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary dark:bg-white/10 dark:border-white/15 dark:text-white/90 text-sm font-semibold mb-8 backdrop-blur-sm shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary dark:bg-white/10 dark:border-white/15 dark:text-white/90 text-sm font-semibold mb-5 sm:mb-8 backdrop-blur-sm shadow-sm"
           >
             <Sparkles className="w-4 h-4 animate-[float-orbit_6s_ease-in-out_infinite]" />
             <span>Lightning fast extraction</span>
@@ -311,7 +311,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-6xl md:text-8xl font-extrabold tracking-tight text-gray-900 dark:text-white max-w-5xl leading-[1.05]"
+            className="text-[2.15rem] sm:text-6xl md:text-8xl font-extrabold tracking-tight text-gray-900 dark:text-white max-w-5xl leading-[1.05]"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             Download{" "}
@@ -329,7 +329,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 text-lg md:text-xl text-gray-600 dark:text-white/55 max-w-2xl leading-relaxed font-medium"
+            className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-gray-600 dark:text-white/55 max-w-2xl leading-relaxed font-medium px-2 sm:px-0"
           >
             Paste a link from YouTube, Twitter, TikTok, or anywhere else. We'll extract
             the highest quality video and audio instantly.
@@ -340,29 +340,32 @@ export default function Home() {
             initial={{ opacity: 0, y: 40, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.3, type: "spring", stiffness: 150, damping: 18 }}
-            className="w-full max-w-3xl mt-12 relative z-20"
+            className="w-full max-w-3xl mt-8 sm:mt-12 relative z-20"
           >
             <form onSubmit={handleAnalyze} className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-600 rounded-2xl blur opacity-20 group-hover:opacity-40 group-focus-within:opacity-50 transition duration-700 animate-gradient-x" style={{backgroundSize: '200% auto'}} />
-              <div className="relative flex items-center bg-white dark:bg-white/8 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/20 shadow-xl dark:shadow-2xl p-2 pl-6 overflow-hidden">
-                <Link2 className="w-6 h-6 text-gray-400 dark:text-white/40 mr-3 flex-shrink-0" />
+              <div className="relative flex items-center bg-white dark:bg-white/8 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/20 shadow-xl dark:shadow-2xl p-1.5 sm:p-2 pl-4 sm:pl-6 overflow-hidden">
+                <Link2 className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 dark:text-white/40 mr-2 sm:mr-3 flex-shrink-0" />
                 <input
                   type="url"
                   required
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="Paste video URL here..."
-                  className="flex-1 bg-transparent border-none text-gray-900 dark:text-white text-lg placeholder:text-gray-400 dark:placeholder:text-white/35 focus:outline-none focus:ring-0 py-4"
+                  placeholder="Paste video URL..."
+                  className="flex-1 bg-transparent border-none text-gray-900 dark:text-white text-sm sm:text-lg placeholder:text-gray-400 dark:placeholder:text-white/35 focus:outline-none focus:ring-0 py-3 sm:py-4 min-w-0"
                 />
                 <button
                   type="submit"
                   disabled={analyzeMutation.isPending || !url}
-                  className="ml-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-violet-600/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="ml-1.5 sm:ml-2 px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-violet-600/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 sm:gap-2 flex-shrink-0 text-sm sm:text-base"
                 >
                   {analyzeMutation.isPending ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                   ) : (
-                    <>Analyze <ArrowRight className="w-5 h-5" /></>
+                    <>
+                      <span className="hidden xs:inline sm:inline">Analyze</span>
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </>
                   )}
                 </button>
               </div>
@@ -374,9 +377,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 w-full max-w-3xl"
+            className="mt-6 sm:mt-10 w-full max-w-3xl"
           >
-            <p className="text-xs text-gray-400 dark:text-white/30 uppercase tracking-widest mb-4 font-semibold">Supports 1000+ sites including</p>
+            <p className="text-xs text-gray-400 dark:text-white/30 uppercase tracking-widest mb-3 sm:mb-4 font-semibold">Supports 1000+ sites including</p>
             <div className="flex flex-wrap items-center justify-center gap-2">
               {PLATFORMS.map((p, pi) => (
                 <motion.div
@@ -410,9 +413,9 @@ export default function Home() {
         whileInView={{ opacity: 1, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full border-y border-border/60 bg-gradient-to-r from-secondary/50 via-background to-secondary/50 dark:bg-secondary/30 py-12"
+        className="w-full border-y border-border/60 bg-gradient-to-r from-secondary/50 via-background to-secondary/50 dark:bg-secondary/30 py-8 sm:py-12"
       >
-        <div className="max-w-4xl mx-auto px-4 grid grid-cols-3 divide-x divide-border/50">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 grid grid-cols-3 divide-x divide-border/50">
           {[
             { value: "10M+", label: "Videos Downloaded", color: "from-violet-500 to-indigo-400", icon: "🎬" },
             { value: "500K+", label: "Active Users", color: "from-indigo-500 to-purple-400", icon: "👥" },
@@ -424,13 +427,13 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center px-4 sm:px-8"
+              className="text-center px-2 sm:px-8"
             >
-              <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className={`text-3xl md:text-4xl font-display font-extrabold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+              <div className="text-lg sm:text-2xl mb-1">{stat.icon}</div>
+              <div className={`text-xl sm:text-3xl md:text-4xl font-display font-extrabold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground mt-1.5 font-semibold">{stat.label}</div>
+              <div className="text-[10px] sm:text-sm text-muted-foreground mt-1 sm:mt-1.5 font-semibold leading-tight">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -452,14 +455,14 @@ export default function Home() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="w-full bg-secondary/50 border-y border-border py-16 overflow-hidden"
+            className="w-full bg-secondary/50 border-y border-border py-8 sm:py-16 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 
                 {/* Video Info Card */}
                 <div className="lg:col-span-1">
-                  <div className="glass-card rounded-2xl p-6 sticky top-28">
+                  <div className="glass-card rounded-2xl p-4 sm:p-6 lg:sticky lg:top-28">
                     <div className="aspect-video w-full rounded-xl overflow-hidden bg-secondary mb-6 border border-border relative group">
                       {videoInfo.thumbnail ? (
                         <img src={videoInfo.thumbnail} alt={videoInfo.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -648,9 +651,9 @@ export default function Home() {
       {!videoInfo && (
         <motion.section
           {...fadeUp()}
-          className="w-full py-16 bg-gradient-to-b from-background via-secondary/30 to-background"
+          className="w-full py-10 sm:py-16 bg-gradient-to-b from-background via-secondary/30 to-background"
         >
-          <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {[
               {
                 icon: Zap,
@@ -683,13 +686,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={`flex flex-col items-center text-center p-7 rounded-2xl border ${feat.bg} ${feat.border} group hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
+                className={`flex sm:flex-col items-center sm:text-center gap-4 sm:gap-0 p-5 sm:p-7 rounded-2xl border ${feat.bg} ${feat.border} group hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
               >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feat.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                  <feat.icon className="w-7 h-7 text-white" />
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br ${feat.gradient} flex items-center justify-center sm:mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                  <feat.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">{feat.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-foreground mb-1 sm:mb-2">{feat.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -703,27 +708,27 @@ export default function Home() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28"
+          className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20"
         >
           <motion.div
             {...fadeUp()}
-            className="text-center mb-20"
+            className="text-center mb-10 sm:mb-16"
           >
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-5 shadow-sm">
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4 shadow-sm">
               Simple process
             </span>
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground mb-4 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-extrabold text-foreground mb-3 tracking-tight">
               Three steps to your{" "}
               <span className="bg-gradient-to-r from-violet-500 to-indigo-400 bg-clip-text text-transparent">
                 content
               </span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-md mx-auto font-medium">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-md mx-auto font-medium">
               No sign-up. No software. Just paste and download.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 relative">
             {/* Connector line */}
             <div className="hidden md:block absolute top-14 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             <div className="hidden md:block absolute top-14 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent blur-sm" />
@@ -765,18 +770,18 @@ export default function Home() {
                 transition={{ duration: 0.65, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                 className="relative z-10 flex flex-col items-center text-center group"
               >
-                <div className="relative mb-7 step-icon-float">
+                <div className="relative mb-5 sm:mb-7 step-icon-float">
                   <div
-                    className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-xl group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-300`}
+                    className={`w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-xl group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-300`}
                     style={{ boxShadow: `0 8px 32px ${step.glow}` }}
                   >
-                    <step.icon className="w-10 h-10 text-white" />
+                    <step.icon className="w-7 h-7 sm:w-10 sm:h-10 text-white" />
                   </div>
-                  <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center shadow-sm">
-                    <span className="text-[10px] font-bold text-primary">{step.num}</span>
+                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center shadow-sm">
+                    <span className="text-[9px] sm:text-[10px] font-bold text-primary">{step.num}</span>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
+                <h3 className="text-base sm:text-xl font-bold text-foreground mb-2 sm:mb-3">{step.title}</h3>
                 <p className="text-muted-foreground leading-relaxed max-w-[240px] text-sm font-medium">{step.desc}</p>
               </motion.div>
             ))}

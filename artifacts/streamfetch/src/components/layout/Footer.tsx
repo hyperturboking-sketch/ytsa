@@ -5,20 +5,20 @@ import AppLogo from "@/components/AppLogo";
 export default function Footer() {
   return (
     <footer className="w-full mt-auto border-t border-border bg-card/60 backdrop-blur-sm relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
 
-          <div className="md:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-3 group mb-5">
-              <AppLogo size={36} className="group-hover:opacity-90 transition-opacity duration-200" />
-              <span className="font-display font-bold text-2xl tracking-tight text-foreground">
+          <div className="col-span-2 md:col-span-2">
+            <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
+              <AppLogo size={30} className="group-hover:opacity-90 transition-opacity duration-200" />
+              <span className="font-display font-bold text-xl tracking-tight text-foreground">
                 YTSave
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
               The fastest, cleanest way to download videos and audio from across the web. Premium quality, zero compromises.
             </p>
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-2.5 mt-4 sm:mt-6">
               <a
                 href="https://x.com/harmonyg1d"
                 target="_blank"
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} YTSave. All rights reserved.
           </p>
