@@ -18,6 +18,8 @@ import Subtitles from "@/pages/subtitles";
 import ForgotPassword from "@/pages/forgot-password";
 import Checkout from "@/pages/checkout";
 import NotFound from "@/pages/not-found";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 
 const Admin = lazy(() => import("@/pages/admin"));
 
@@ -59,6 +61,8 @@ function Router() {
             <Route path="/tools" component={Tools} />
             <Route path="/tools/transcribe" component={Transcribe} />
             <Route path="/tools/subtitles" component={Subtitles} />
+            <Route path="/blog" component={Blog} />
+            <Route path="/blog/:slug" component={BlogPost} />
             <Route component={NotFound} />
           </Switch>
         </AppLayout>

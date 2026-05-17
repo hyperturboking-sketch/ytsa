@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
   Download, LogOut, User, LayoutDashboard, Settings,
-  Sun, Moon, Menu, X, ChevronRight, Wrench, Tag
+  Sun, Moon, Menu, X, ChevronRight, Wrench, Tag, BookOpen
 } from "lucide-react";
 import { useAuthStore } from "@/lib/auth";
 import { useLogout } from "@/hooks/use-api";
@@ -82,6 +82,7 @@ export default function Navbar() {
             <div className="hidden sm:flex items-center gap-6 flex-1">
               <Link href="/tools" className={linkClass("/tools")}>Tools</Link>
               <Link href="/pricing" className={linkClass("/pricing", true)}>Pricing</Link>
+              <Link href="/blog" className={linkClass("/blog")}>Blog</Link>
               {user && (
                 <Link href="/dashboard" className={linkClass("/dashboard", true)}>Dashboard</Link>
               )}
@@ -175,6 +176,7 @@ export default function Navbar() {
               <MobileLink href="/" label="Home" icon={<Download className="w-4 h-4" />} active={location === "/"} />
               <MobileLink href="/tools" label="Tools" icon={<Wrench className="w-4 h-4" />} active={location.startsWith("/tools")} />
               <MobileLink href="/pricing" label="Pricing" icon={<Tag className="w-4 h-4" />} active={location === "/pricing"} />
+              <MobileLink href="/blog" label="Blog" icon={<BookOpen className="w-4 h-4" />} active={location.startsWith("/blog")} />
               {user && <MobileLink href="/dashboard" label="Dashboard" icon={<LayoutDashboard className="w-4 h-4" />} active={location === "/dashboard"} />}
               {user?.isAdmin && <MobileLink href="/admin" label="Admin Panel" icon={<Settings className="w-4 h-4" />} active={location.startsWith("/admin")} />}
 
