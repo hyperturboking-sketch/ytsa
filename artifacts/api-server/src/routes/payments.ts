@@ -30,10 +30,22 @@ function sortObjectKeys(obj: Record<string, unknown>): Record<string, unknown> {
     }, {});
 }
 
+const PROMO_CODES: Record<string, { discount: number; label: string }> = {
+  SAVE10:   { discount: 0.10, label: "10% off" },
+  SAVE20:   { discount: 0.20, label: "20% off" },
+  WELCOME:  { discount: 0.15, label: "15% off — Welcome!" },
+  YTSAVE50: { discount: 0.50, label: "50% off — Special!" },
+  LAUNCH:   { discount: 0.25, label: "25% off — Launch deal" },
+};
+
 // POST /payments/create-order
 router.post("/create-order", authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
-    const { plan, billing = "monthly" } = req.body as { plan: string; billing?: "monthly" | "annual" };
+    const { plan, billing = "monthly", promoCode } = req.body as {
+      plan: string;
+      billing?: "monthly" | "annual";
+      promoCode?: string;
+    };
 
     if (!["basic", "pro", "elite"].includes(plan)) {
       res.status(400).json({ error: "Invalid plan" });
@@ -51,7 +63,12 @@ router.post("/create-order", authMiddleware, async (req: AuthRequest, res: Respo
     }
 
     const priceTable = billing === "annual" ? PLAN_PRICES_ANNUAL : PLAN_PRICES_MONTHLY;
-    const amount = priceTable[plan];
+    const baseAmount = priceTable[plan];
+
+    // Apply promo code discount if provided and valid
+    const promo = promoCode ? PROMO_CODES[promoCode.trim().toUpperCase()] : null;
+    const discountAmt = promo ? Math.round(baseAmount * promo.discount * 100) / 100 : 0;
+    const amount = Math.round((baseAmount - discountAmt) * 100) / 100;
     const billingLabel = billing === "annual" ? "Annual" : "Monthly";
     const planLabel = `YTSave ${plan.charAt(0).toUpperCase() + plan.slice(1)} – ${billingLabel}`;
 
