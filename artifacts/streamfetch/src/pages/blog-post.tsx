@@ -151,6 +151,7 @@ export default function BlogPost() {
           emoji={post.coverEmoji}
           gradient={post.coverGradient}
           pattern={post.coverPattern}
+          coverImage={post.coverImage}
           size="hero"
         />
         {/* Overlaid meta on hero */}
@@ -236,6 +237,7 @@ export default function BlogPost() {
                         emoji={rp.coverEmoji}
                         gradient={rp.coverGradient}
                         pattern={rp.coverPattern}
+                        coverImage={rp.coverImage}
                         size="card"
                         className="h-24 group-hover:scale-[1.04] transition-transform duration-400"
                       />

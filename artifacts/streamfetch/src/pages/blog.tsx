@@ -69,6 +69,7 @@ export default function Blog() {
                   emoji={featured.coverEmoji}
                   gradient={featured.coverGradient}
                   pattern={featured.coverPattern}
+                  coverImage={featured.coverImage}
                   size="card"
                   className="h-48 sm:h-72 group-hover:scale-[1.02] transition-transform duration-500"
                 />
@@ -115,6 +116,7 @@ export default function Blog() {
                         emoji={post.coverEmoji}
                         gradient={post.coverGradient}
                         pattern={post.coverPattern}
+                        coverImage={post.coverImage}
                         size="card"
                         className="h-36 sm:h-44 group-hover:scale-[1.03] transition-transform duration-500"
                       />
