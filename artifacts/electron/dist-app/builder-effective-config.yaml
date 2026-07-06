@@ -1,42 +1,36 @@
-appId: com.ytsave.desktop
-productName: YTSave
-copyright: Copyright © 2025 YTSave
-
 directories:
   output: dist-app
   buildResources: build
-
+appId: com.ytsave.desktop
+productName: YTSave
+copyright: Copyright © 2025 YTSave
 files:
-  - dist/**/*
-  - package.json
-
-# Bundle the compiled api-server (single CJS bundle) and frontend
+  - filter:
+      - dist/**/*
+      - package.json
 extraResources:
-  - from: "../api-server/dist"
-    to: "artifacts/api-server/dist"
+  - from: ../api-server/dist
+    to: artifacts/api-server/dist
     filter:
-      - "**/*"
-  - from: "../api-server/package.json"
-    to: "artifacts/api-server/package.json"
-  - from: "../streamfetch/dist"
-    to: "artifacts/streamfetch/dist"
+      - '**/*'
+  - from: ../api-server/package.json
+    to: artifacts/api-server/package.json
+  - from: ../streamfetch/dist
+    to: artifacts/streamfetch/dist
     filter:
-      - "**/*"
-
+      - '**/*'
 win:
   target:
     - target: nsis
       arch:
         - x64
   icon: build/icons/256x256.png
-
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: YTSave
-
 mac:
   target:
     - target: dmg
@@ -46,7 +40,6 @@ mac:
   icon: build/icons/512x512.png
   category: public.app-category.utilities
   darkModeSupport: true
-
 linux:
   target:
     - target: AppImage
@@ -54,5 +47,5 @@ linux:
         - x64
   icon: build/icons
   category: Utility
-
 publish: null
+electronVersion: 36.9.5

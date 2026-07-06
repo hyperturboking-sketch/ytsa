@@ -21,7 +21,8 @@ const RELEASES = {
   windows: {
     label: "Download for Windows",
     sublabel: "Windows 10 / 11 · 64-bit",
-    ext: ".tar.gz · extract & run pnpm install && pnpm run dev",
+    ext: "Source code · extract & run pnpm install && pnpm run dev",
+    badge: null as string | null,
     icon: Monitor,
     color: "from-blue-500 to-cyan-500",
     bg: "from-blue-500/10 to-cyan-500/10",
@@ -31,7 +32,8 @@ const RELEASES = {
   mac: {
     label: "Download for macOS",
     sublabel: "macOS 12+ · Intel & Apple Silicon",
-    ext: ".tar.gz · extract & run pnpm install && pnpm run dev",
+    ext: "Source code · extract & run pnpm install && pnpm run dev",
+    badge: null as string | null,
     icon: Apple,
     color: "from-violet-500 to-purple-500",
     bg: "from-violet-500/10 to-purple-500/10",
@@ -41,7 +43,8 @@ const RELEASES = {
   linux: {
     label: "Download for Linux",
     sublabel: "Ubuntu, Fedora, Arch & more",
-    ext: ".tar.gz · extract & run pnpm install && pnpm run dev",
+    ext: "AppImage · chmod +x then double-click to run. No install needed.",
+    badge: "Ready to run",
     icon: Terminal,
     color: "from-emerald-500 to-teal-500",
     bg: "from-emerald-500/10 to-teal-500/10",
@@ -64,9 +67,9 @@ const STEPS: Record<Platform, { step: string; detail: string }[]> = {
     { step: "Paste any video URL", detail: "YouTube, TikTok, Instagram — it all works instantly" },
   ],
   linux: [
-    { step: "Download the AppImage", detail: "Click the button above to download YTSave.AppImage" },
-    { step: "Make it executable", detail: "Run: chmod +x YTSave-Linux.AppImage" },
-    { step: "Launch YTSave", detail: "Double-click the file or run it from the terminal" },
+    { step: "Download the AppImage", detail: "Click the button above — a real pre-built binary, no Node.js needed" },
+    { step: "Make it executable", detail: "Right-click → Properties → Allow executing, or run: chmod +x YTSave-*.AppImage" },
+    { step: "Launch YTSave", detail: "Double-click the file and it opens instantly" },
     { step: "Paste any video URL", detail: "YouTube, TikTok, Instagram — it all works instantly" },
   ],
 };
@@ -155,8 +158,13 @@ function PlatformCard({
         {platform === "windows" ? "Windows" : platform === "mac" ? "macOS" : "Linux"}
       </p>
       <p className="text-xs text-muted-foreground mt-0.5">{info.sublabel}</p>
+      {info.badge && (
+        <span className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+          ✓ {info.badge}
+        </span>
+      )}
       {selected && (
-        <span className={`inline-flex items-center gap-1 mt-2 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r ${info.color} bg-clip-text text-transparent`}>
+        <span className={`inline-flex items-center gap-1 mt-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r ${info.color} bg-clip-text text-transparent`}>
           ● Selected
         </span>
       )}

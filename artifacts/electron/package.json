@@ -1,7 +1,8 @@
 {
-  "name": "@workspace/electron",
+  "name": "ytsave",
   "version": "1.0.0",
   "description": "YTSave Desktop — download videos from YouTube, TikTok, Instagram and more",
+  "author": "YTSave",
   "private": true,
   "main": "dist/main.js",
   "scripts": {
