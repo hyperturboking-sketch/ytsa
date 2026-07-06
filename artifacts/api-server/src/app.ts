@@ -23,7 +23,7 @@ app.use(compression());
 
 // Hard 30 s timeout for all routes except analyze/download which manage their own timeouts
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const isLongOp = req.path.startsWith("/api/analyze") || req.path.startsWith("/api/download");
+  const isLongOp = req.path.startsWith("/api/analyze") || req.path.startsWith("/api/download") || req.path.startsWith("/api/app/download");
   if (!isLongOp) {
     res.setTimeout(30000, () => {
       if (!res.headersSent) res.status(503).json({ error: "Request timeout" });

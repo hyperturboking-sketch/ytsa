@@ -246,8 +246,7 @@ export default function DownloadPage() {
             >
               <a
                 href={release.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                download
                 className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r ${release.color} text-white font-bold text-base shadow-xl hover:opacity-90 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200`}
               >
                 <PlatformIcon className="w-5 h-5" />
@@ -266,8 +265,7 @@ export default function DownloadPage() {
                   <a
                     key={p}
                     href={r.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    download
                     className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -424,8 +422,7 @@ export default function DownloadPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href={RELEASES[platform].url}
-                target="_blank"
-                rel="noopener noreferrer"
+                download
                 className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r ${RELEASES[platform].color} text-white font-bold text-sm shadow-lg hover:opacity-90 hover:-translate-y-0.5 transition-all duration-200`}
               >
                 <PlatformIcon className="w-4 h-4" />
