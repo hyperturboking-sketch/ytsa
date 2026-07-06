@@ -25,17 +25,10 @@ extraResources:
 
 win:
   target:
-    - target: nsis
+    - target: zip
       arch:
         - x64
   icon: build/icons/256x256.png
-
-nsis:
-  oneClick: false
-  allowToChangeInstallationDirectory: true
-  createDesktopShortcut: true
-  createStartMenuShortcut: true
-  shortcutName: YTSave
 
 mac:
   target:

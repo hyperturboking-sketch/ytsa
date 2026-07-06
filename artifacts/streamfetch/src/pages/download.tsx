@@ -21,8 +21,8 @@ const RELEASES = {
   windows: {
     label: "Download for Windows",
     sublabel: "Windows 10 / 11 · 64-bit",
-    ext: "Source code · extract & run pnpm install && pnpm run dev",
-    badge: null as string | null,
+    ext: ".zip · extract YTSave.exe and run it directly — no install wizard needed",
+    badge: "Ready to run" as string | null,
     icon: Monitor,
     color: "from-blue-500 to-cyan-500",
     bg: "from-blue-500/10 to-cyan-500/10",
@@ -55,9 +55,9 @@ const RELEASES = {
 
 const STEPS: Record<Platform, { step: string; detail: string }[]> = {
   windows: [
-    { step: "Download the installer", detail: "Click the button above to download YTSave-Setup.exe" },
-    { step: "Run the installer", detail: "Double-click the .exe and follow the setup wizard" },
-    { step: "Launch YTSave", detail: "Open from the Desktop shortcut or Start Menu" },
+    { step: "Download the zip", detail: "Click the button above — a real pre-built Windows binary, no Node.js needed" },
+    { step: "Extract the zip", detail: "Right-click the .zip → Extract All, then open the YTSave folder" },
+    { step: "Run YTSave.exe", detail: "Double-click YTSave.exe — Windows may show a SmartScreen prompt, click 'Run anyway'" },
     { step: "Paste any video URL", detail: "YouTube, TikTok, Instagram — it all works instantly" },
   ],
   mac: [

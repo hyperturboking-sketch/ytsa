@@ -21,10 +21,10 @@ function findElectronDir(): string {
   return candidates[0];
 }
 
-function findAppImage(electronDir: string): string | null {
+function findBuiltFile(electronDir: string, suffix: string): string | null {
   const distApp = path.join(electronDir, "dist-app");
   if (!fs.existsSync(distApp)) return null;
-  const files = fs.readdirSync(distApp).filter((f) => f.endsWith(".AppImage"));
+  const files = fs.readdirSync(distApp).filter((f) => f.endsWith(suffix));
   if (!files.length) return null;
   return path.join(distApp, files[0]);
 }
@@ -82,13 +82,26 @@ router.get("/app/download/:platform", (req, res) => {
 
   // Linux — serve the pre-built AppImage directly
   if (platform === "linux") {
-    const appImage = findAppImage(electronDir);
+    const appImage = findBuiltFile(electronDir, ".AppImage");
     if (appImage && fs.existsSync(appImage)) {
       const filename = path.basename(appImage);
       res.setHeader("Content-Type", "application/octet-stream");
       res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
       res.setHeader("Content-Length", fs.statSync(appImage).size.toString());
       fs.createReadStream(appImage).pipe(res);
+      return;
+    }
+  }
+
+  // Windows — serve the pre-built zip directly
+  if (platform === "windows") {
+    const winZip = findBuiltFile(electronDir, "-win.zip");
+    if (winZip && fs.existsSync(winZip)) {
+      const filename = path.basename(winZip);
+      res.setHeader("Content-Type", "application/zip");
+      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+      res.setHeader("Content-Length", fs.statSync(winZip).size.toString());
+      fs.createReadStream(winZip).pipe(res);
       return;
     }
   }
