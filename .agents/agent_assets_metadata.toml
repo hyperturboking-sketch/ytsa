@@ -1,0 +1,67 @@
+uploads = []
+
+[[generated]]
+id = "AK37YT7E6lgcc8njZMjRi"
+uri = "file://artifacts/streamfetch/public/logo.png"
+type = "image"
+title = "YTSave app logo"
+
+[[generated]]
+id = "XS2oIAYhihbqb8wN3HuVZ"
+uri = "file://artifacts/streamfetch/public/favicon.png"
+type = "image"
+title = "YTSave favicon icon"
+
+[[generated]]
+id = "7UehR-WEoGZr1BwFpGqV3"
+uri = "file://artifacts/streamfetch/public/logo-large.png"
+type = "image"
+title = "YTSave large hero logo"
+
+[[generated]]
+id = "ZdqpGK6EXtSnYaBW-vmQ1"
+uri = "file://artifacts/streamfetch/public/blog-covers/youtube-4k.png"
+type = "image"
+title = "youtube-4k-cover"
+
+[[generated]]
+id = "SdTmc-ZY4km3q47TlgGmO"
+uri = "file://artifacts/streamfetch/public/blog-covers/mp4-vs-mp3.png"
+type = "image"
+title = "mp4-vs-mp3-cover"
+
+[[generated]]
+id = "dDA5DxPvuzmyPeHOsDj_u"
+uri = "file://artifacts/streamfetch/public/blog-covers/tiktok-download.png"
+type = "image"
+title = "tiktok-cover"
+
+[[generated]]
+id = "6baRflQ0_jPqTb7vIk-wC"
+uri = "file://artifacts/streamfetch/public/blog-covers/video-formats.png"
+type = "image"
+title = "video-formats-cover"
+
+[[generated]]
+id = "-AicRpyYrNtgbttlu2utm"
+uri = "file://artifacts/streamfetch/public/blog-covers/instagram-reels.png"
+type = "image"
+title = "instagram-reels-cover"
+
+[[generated]]
+id = "xphsHVlYJztGd9m4Ybdny"
+uri = "file://artifacts/streamfetch/public/blog-covers/youtube-to-mp3.png"
+type = "image"
+title = "youtube-mp3-cover"
+
+[[outputs]]
+id = "_sGduDWrnG3WY_GfHhKTy"
+uri = "file://artifacts/streamfetch/public/ytsave-icon.png"
+type = "image"
+title = "YTSave Logo Icon"
+
+[[outputs]]
+id = "a6hGxw3gXkFqc_kucLgNB"
+uri = "file://streamfetch-frontend.zip"
+type = "unspecified"
+title = "StreamFetch Frontend (2.83 MB)"

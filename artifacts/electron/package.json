@@ -1,0 +1,23 @@
+{
+  "name": "ytsave",
+  "version": "1.0.0",
+  "description": "YTSave Desktop — download videos from YouTube, TikTok, Instagram and more",
+  "author": "YTSave",
+  "private": true,
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "tsc && electron .",
+    "build": "tsc",
+    "dist": "pnpm run prebuild && tsc && electron-builder",
+    "dist:win": "pnpm run prebuild && tsc && electron-builder --win",
+    "dist:mac": "pnpm run prebuild && tsc && electron-builder --mac",
+    "dist:linux": "pnpm run prebuild && tsc && electron-builder --linux",
+    "prebuild": "pnpm --filter @workspace/streamfetch run build && pnpm --filter @workspace/api-server run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "electron": "^36.0.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.9.0"
+  }
+}
