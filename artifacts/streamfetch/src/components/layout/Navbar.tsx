@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
   Download, LogOut, User, LayoutDashboard, Settings,
-  Sun, Moon, Menu, X, ChevronRight, Wrench, Tag, BookOpen
+  Sun, Moon, Menu, X, ChevronRight, Wrench, Tag, BookOpen, MonitorDown
 } from "lucide-react";
 import { useAuthStore } from "@/lib/auth";
 import { useLogout } from "@/hooks/use-api";
@@ -83,6 +83,10 @@ export default function Navbar() {
               <Link href="/tools" className={linkClass("/tools")}>Tools</Link>
               <Link href="/pricing" className={linkClass("/pricing", true)}>Pricing</Link>
               <Link href="/blog" className={linkClass("/blog")}>Blog</Link>
+              <Link href="/download" className={`hidden lg:inline-flex items-center gap-1.5 text-sm font-semibold font-display tracking-wide transition-all duration-200 px-3 py-1.5 rounded-xl ${isActive("/download", true) ? "bg-violet-500/20 text-violet-300" : "text-violet-300/80 hover:text-violet-200 hover:bg-violet-500/15 border border-violet-500/20"}`}>
+                <MonitorDown className="w-3.5 h-3.5" />
+                Desktop App
+              </Link>
               {user && (
                 <Link href="/dashboard" className={linkClass("/dashboard", true)}>Dashboard</Link>
               )}
@@ -177,6 +181,7 @@ export default function Navbar() {
               <MobileLink href="/tools" label="Tools" icon={<Wrench className="w-4 h-4" />} active={location.startsWith("/tools")} />
               <MobileLink href="/pricing" label="Pricing" icon={<Tag className="w-4 h-4" />} active={location === "/pricing"} />
               <MobileLink href="/blog" label="Blog" icon={<BookOpen className="w-4 h-4" />} active={location.startsWith("/blog")} />
+              <MobileLink href="/download" label="Desktop App" icon={<MonitorDown className="w-4 h-4" />} active={location === "/download"} />
               {user && <MobileLink href="/dashboard" label="Dashboard" icon={<LayoutDashboard className="w-4 h-4" />} active={location === "/dashboard"} />}
               {user?.isAdmin && <MobileLink href="/admin" label="Admin Panel" icon={<Settings className="w-4 h-4" />} active={location.startsWith("/admin")} />}
 

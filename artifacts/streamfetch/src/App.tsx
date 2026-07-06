@@ -20,6 +20,7 @@ import Checkout from "@/pages/checkout";
 import NotFound from "@/pages/not-found";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
+import Download from "@/pages/download";
 
 const Admin = lazy(() => import("@/pages/admin"));
 
@@ -63,6 +64,7 @@ function Router() {
             <Route path="/tools/subtitles" component={Subtitles} />
             <Route path="/blog" component={Blog} />
             <Route path="/blog/:slug" component={BlogPost} />
+            <Route path="/download" component={Download} />
             <Route component={NotFound} />
           </Switch>
         </AppLayout>
