@@ -74,8 +74,15 @@ const ARIA2C_PATH = (() => {
   } catch { return null; }
 })();
 
-// Player clients to try in order — YouTube periodically blocks individual clients.
-// We rotate through them so at least one usually works without cookies.
+// When running as an Electron desktop app, yt-dlp can read the user's own
+// browser cookies — their actual YouTube session — which bypasses all bot detection.
+const IS_ELECTRON = process.env.ELECTRON_RUN === "true";
+
+// Browsers to try for cookie extraction (Electron / desktop mode only).
+// yt-dlp reads cookies directly from the browser's profile without any user action.
+const COOKIE_BROWSERS = ["chrome", "chromium", "firefox", "edge", "brave", "safari"];
+
+// Player clients to try on the server (no cookies available in datacenter IPs).
 const PLAYER_CLIENTS = ["ios", "tv_embedded", "web", "android", "mweb"];
 
 const COMMON_ARGS = [
@@ -83,25 +90,59 @@ const COMMON_ARGS = [
   "--no-warnings",
 ];
 
-function buildBaseArgs(playerClient: string): string[] {
-  return [
-    "--extractor-args", `youtube:player_client=${playerClient}`,
-    ...COMMON_ARGS,
-  ];
+type Strategy =
+  | { type: "cookies"; browser: string }
+  | { type: "player"; client: string };
+
+/** Build the list of strategies to try, in order. */
+function buildStrategies(): Strategy[] {
+  if (IS_ELECTRON) {
+    // Desktop app: always try browser cookies first — these use the user's real
+    // YouTube session (their IP, their account) so they never get bot-blocked.
+    return [
+      ...COOKIE_BROWSERS.map((b): Strategy => ({ type: "cookies", browser: b })),
+      ...PLAYER_CLIENTS.map((c): Strategy => ({ type: "player", client: c })),
+    ];
+  }
+  return PLAYER_CLIENTS.map((c): Strategy => ({ type: "player", client: c }));
 }
 
-/** Run yt-dlp, returning stdout. Retries with each player client until one succeeds. */
-function runYtDlp(args: string[]): Promise<string> {
-  const isBotError = (msg: string) =>
-    msg.includes("Sign in to confirm") ||
-    msg.includes("bot") ||
-    msg.includes("not a bot") ||
-    msg.includes("This video is not available") ||
-    msg.includes("Precondition check failed");
+function argsForStrategy(s: Strategy): string[] {
+  if (s.type === "cookies") {
+    return ["--cookies-from-browser", s.browser, ...COMMON_ARGS];
+  }
+  return ["--extractor-args", `youtube:player_client=${s.client}`, ...COMMON_ARGS];
+}
 
-  const tryClient = (clientIndex: number): Promise<string> => {
-    const client = PLAYER_CLIENTS[clientIndex];
-    const baseArgs = buildBaseArgs(client);
+function isBotError(msg: string): boolean {
+  return (
+    msg.includes("Sign in to confirm") ||
+    msg.includes("not a bot") ||
+    msg.includes("Precondition check failed") ||
+    msg.includes("This video is not available") ||
+    (msg.includes("ERROR") && msg.includes("bot"))
+  );
+}
+
+function isCookieError(msg: string): boolean {
+  return (
+    msg.includes("cookies-from-browser") ||
+    msg.includes("No such browser") ||
+    msg.includes("browser") && msg.includes("not found") ||
+    msg.includes("KeyError")
+  );
+}
+
+/** Run yt-dlp, returning stdout. Tries each strategy until one succeeds. */
+function runYtDlp(args: string[]): Promise<string> {
+  const strategies = buildStrategies();
+
+  const tryStrategy = (index: number): Promise<string> => {
+    const strategy = strategies[index];
+    const baseArgs = argsForStrategy(strategy);
+    const label = strategy.type === "cookies"
+      ? `cookies:${strategy.browser}`
+      : `player:${strategy.client}`;
 
     return new Promise((resolve, reject) => {
       const proc = spawn(YTDLP_PATH, [...baseArgs, ...args], { timeout: 60000 });
@@ -115,13 +156,13 @@ function runYtDlp(args: string[]): Promise<string> {
         if (code === 0) {
           resolve(stdout.trim());
         } else {
-          const errorMsg = stderr || `yt-dlp exited with code ${code}`;
-          const canRetry = clientIndex + 1 < PLAYER_CLIENTS.length && isBotError(stderr);
+          const canRetry = index + 1 < strategies.length &&
+            (isBotError(stderr) || isCookieError(stderr));
           if (canRetry) {
-            console.warn(`[yt-dlp] player_client=${client} blocked, trying next...`);
-            tryClient(clientIndex + 1).then(resolve).catch(reject);
+            console.warn(`[yt-dlp] ${label} failed, trying next strategy...`);
+            tryStrategy(index + 1).then(resolve).catch(reject);
           } else {
-            reject(new Error(errorMsg));
+            reject(new Error(stderr || `yt-dlp exited with code ${code}`));
           }
         }
       });
@@ -132,7 +173,7 @@ function runYtDlp(args: string[]): Promise<string> {
     });
   };
 
-  return tryClient(0);
+  return tryStrategy(0);
 }
 
 /** Bytes from bitrate (kbps) × duration (seconds). Returns null if either is missing. */
@@ -398,15 +439,14 @@ export async function downloadToFile(
     ];
   }
 
-  const isBotError = (msg: string) =>
-    msg.includes("Sign in to confirm") ||
-    msg.includes("bot") ||
-    msg.includes("not a bot") ||
-    msg.includes("Precondition check failed");
+  const strategies = buildStrategies();
 
-  const tryDownload = (clientIndex: number): Promise<void> => {
-    const client = PLAYER_CLIENTS[clientIndex];
-    const baseArgs = buildBaseArgs(client);
+  const tryDownload = (index: number): Promise<void> => {
+    const strategy = strategies[index];
+    const baseArgs = argsForStrategy(strategy);
+    const label = strategy.type === "cookies"
+      ? `cookies:${strategy.browser}`
+      : `player:${strategy.client}`;
 
     return new Promise<void>((resolve, reject) => {
       const proc = spawn(YTDLP_PATH, [...baseArgs, ...args], { timeout: 600000 });
@@ -423,10 +463,11 @@ export async function downloadToFile(
         if (code === 0) {
           resolve();
         } else {
-          const canRetry = clientIndex + 1 < PLAYER_CLIENTS.length && isBotError(stderr);
+          const canRetry = index + 1 < strategies.length &&
+            (isBotError(stderr) || isCookieError(stderr));
           if (canRetry) {
-            console.warn(`[yt-dlp download] player_client=${client} blocked, trying next...`);
-            tryDownload(clientIndex + 1).then(resolve).catch(reject);
+            console.warn(`[yt-dlp download] ${label} failed, trying next strategy...`);
+            tryDownload(index + 1).then(resolve).catch(reject);
           } else {
             reject(new Error(stderr.slice(-2000) || `yt-dlp exited with code ${code}`));
           }

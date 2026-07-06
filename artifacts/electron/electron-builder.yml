@@ -1,0 +1,65 @@
+appId: com.ytsave.desktop
+productName: YTSave
+copyright: Copyright © 2025 YTSave
+
+directories:
+  output: dist-app
+  buildResources: build
+
+files:
+  - dist/**/*
+  - package.json
+
+# Bundle the api-server (compiled) and streamfetch frontend alongside the app
+extraResources:
+  - from: "../api-server"
+    to: "artifacts/api-server"
+    filter:
+      - "dist/**/*"
+      - "package.json"
+      - "node_modules/**/*"
+      - "!node_modules/**/*.md"
+      - "!node_modules/**/*.ts"
+  - from: "../streamfetch/dist"
+    to: "artifacts/streamfetch/dist"
+    filter:
+      - "**/*"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: YTSave
+
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.icns
+  category: public.app-category.utilities
+  darkModeSupport: true
+
+dmg:
+  title: YTSave
+  background: build/dmg-background.png
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: build/icons
+  category: Utility
+
+publish: null
