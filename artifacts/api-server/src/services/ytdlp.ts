@@ -74,31 +74,65 @@ const ARIA2C_PATH = (() => {
   } catch { return null; }
 })();
 
-const BASE_ARGS = [
-  "--extractor-args", "youtube:player_client=android_vr",
+// Player clients to try in order — YouTube periodically blocks individual clients.
+// We rotate through them so at least one usually works without cookies.
+const PLAYER_CLIENTS = ["ios", "tv_embedded", "web", "android", "mweb"];
+
+const COMMON_ARGS = [
+  "--no-check-certificates",
+  "--no-warnings",
 ];
 
+function buildBaseArgs(playerClient: string): string[] {
+  return [
+    "--extractor-args", `youtube:player_client=${playerClient}`,
+    ...COMMON_ARGS,
+  ];
+}
+
+/** Run yt-dlp, returning stdout. Retries with each player client until one succeeds. */
 function runYtDlp(args: string[]): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const proc = spawn(YTDLP_PATH, [...BASE_ARGS, ...args], { timeout: 60000 });
-    let stdout = "";
-    let stderr = "";
+  const isBotError = (msg: string) =>
+    msg.includes("Sign in to confirm") ||
+    msg.includes("bot") ||
+    msg.includes("not a bot") ||
+    msg.includes("This video is not available") ||
+    msg.includes("Precondition check failed");
 
-    proc.stdout.on("data", (d: Buffer) => { stdout += d.toString(); });
-    proc.stderr.on("data", (d: Buffer) => { stderr += d.toString(); });
+  const tryClient = (clientIndex: number): Promise<string> => {
+    const client = PLAYER_CLIENTS[clientIndex];
+    const baseArgs = buildBaseArgs(client);
 
-    proc.on("close", (code) => {
-      if (code === 0) {
-        resolve(stdout.trim());
-      } else {
-        reject(new Error(stderr || `yt-dlp exited with code ${code}`));
-      }
+    return new Promise((resolve, reject) => {
+      const proc = spawn(YTDLP_PATH, [...baseArgs, ...args], { timeout: 60000 });
+      let stdout = "";
+      let stderr = "";
+
+      proc.stdout.on("data", (d: Buffer) => { stdout += d.toString(); });
+      proc.stderr.on("data", (d: Buffer) => { stderr += d.toString(); });
+
+      proc.on("close", (code) => {
+        if (code === 0) {
+          resolve(stdout.trim());
+        } else {
+          const errorMsg = stderr || `yt-dlp exited with code ${code}`;
+          const canRetry = clientIndex + 1 < PLAYER_CLIENTS.length && isBotError(stderr);
+          if (canRetry) {
+            console.warn(`[yt-dlp] player_client=${client} blocked, trying next...`);
+            tryClient(clientIndex + 1).then(resolve).catch(reject);
+          } else {
+            reject(new Error(errorMsg));
+          }
+        }
+      });
+
+      proc.on("error", (err) => {
+        reject(new Error(`Failed to run yt-dlp: ${err.message}`));
+      });
     });
+  };
 
-    proc.on("error", (err) => {
-      reject(new Error(`Failed to run yt-dlp: ${err.message}`));
-    });
-  });
+  return tryClient(0);
 }
 
 /** Bytes from bitrate (kbps) × duration (seconds). Returns null if either is missing. */
@@ -364,14 +398,21 @@ export async function downloadToFile(
     ];
   }
 
-  try {
-    await new Promise<void>((resolve, reject) => {
-      const proc = spawn(YTDLP_PATH, [...BASE_ARGS, ...args], { timeout: 600000 });
+  const isBotError = (msg: string) =>
+    msg.includes("Sign in to confirm") ||
+    msg.includes("bot") ||
+    msg.includes("not a bot") ||
+    msg.includes("Precondition check failed");
+
+  const tryDownload = (clientIndex: number): Promise<void> => {
+    const client = PLAYER_CLIENTS[clientIndex];
+    const baseArgs = buildBaseArgs(client);
+
+    return new Promise<void>((resolve, reject) => {
+      const proc = spawn(YTDLP_PATH, [...baseArgs, ...args], { timeout: 600000 });
       let stderr = "";
 
-      proc.stdout.on("data", (_d: Buffer) => {
-        // yt-dlp progress goes to stderr; stdout is unused when writing to file
-      });
+      proc.stdout.on("data", (_d: Buffer) => {});
       proc.stderr.on("data", (d: Buffer) => {
         const line = d.toString();
         stderr += line;
@@ -379,14 +420,27 @@ export async function downloadToFile(
       });
 
       proc.on("close", (code) => {
-        if (code === 0) resolve();
-        else reject(new Error(stderr.slice(-2000) || `yt-dlp exited with code ${code}`));
+        if (code === 0) {
+          resolve();
+        } else {
+          const canRetry = clientIndex + 1 < PLAYER_CLIENTS.length && isBotError(stderr);
+          if (canRetry) {
+            console.warn(`[yt-dlp download] player_client=${client} blocked, trying next...`);
+            tryDownload(clientIndex + 1).then(resolve).catch(reject);
+          } else {
+            reject(new Error(stderr.slice(-2000) || `yt-dlp exited with code ${code}`));
+          }
+        }
       });
 
       proc.on("error", (err) => {
         reject(new Error(`Failed to run yt-dlp: ${err.message}`));
       });
     });
+  };
+
+  try {
+    await tryDownload(0);
   } finally {
     // Release the slot as soon as yt-dlp exits so the next queued download can start
     // (the file stream to the client happens independently)
